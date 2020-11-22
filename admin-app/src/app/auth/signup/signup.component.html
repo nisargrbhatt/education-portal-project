@@ -1,0 +1,78 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSaveData()" *ngIf="!isLoading">
+    <mat-form-field>
+      <mat-label>Name:</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Enter Your Name"
+        formControlName="name"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>User Type</mat-label>
+      <mat-select formControlName="utype">
+        <mat-option value="Teacher">Teacher</mat-option>
+        <mat-option value="Student">Student</mat-option>
+        <mat-option value="Admin">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Department</mat-label>
+      <mat-select formControlName="department" [required]="!validAdmin()">
+        <mat-option
+          *ngFor="let department of departments"
+          [value]="department"
+          >{{ department }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email:</mat-label>
+      <input
+        matInput
+        type="email"
+        placeholder="Enter Your Email"
+        formControlName="email"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password:</mat-label>
+      <input
+        matInput
+        type="password"
+        placeholder="Enter Your Password"
+        formControlName="password"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Semester: (*Enter if you are student)</mat-label>
+      <mat-select formControlName="semester" [required]="valid()">
+        <mat-option *ngFor="let semester of semesters" [value]="semester">{{
+          semester
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Date of Joining</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [required]="!validAdmin()"
+        formControlName="dateofjoining"
+      />
+
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      Create
+    </button>
+  </form>
+</mat-card>

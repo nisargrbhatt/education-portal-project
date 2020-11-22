@@ -1,0 +1,23 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-grid-list
+  class="example-card"
+  cols="2"
+  rowHeight="1:2"
+  *ngIf="lectures && !isLoading"
+>
+  <mat-grid-tile *ngFor="let lecture of lectures">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ lecture.subject_name }}</mat-card-title>
+        <mat-card-subtitle>Lecture</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Timing: {{ lecture.timing }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary">Join {{ lecture.join }}</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+<p *ngIf="!lectures && !isLoading">No Lectures For Now 😆</p>

@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSaveData()" *ngIf="!isLoading">
+    <mat-form-field>
+      <mat-label>Email:</mat-label>
+      <input
+        matInput
+        type="email"
+        placeholder="Enter Your Email"
+        formControlName="email"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password:</mat-label>
+      <input
+        matInput
+        type="password"
+        placeholder="Enter Your Password"
+        formControlName="password"
+      />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      Login
+    </button>
+  </form>
+</mat-card>

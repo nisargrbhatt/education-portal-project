@@ -1,0 +1,50 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<button
+  mat-button
+  *ngIf="!isLoading"
+  color="warn"
+  matTooltip="It is used when You have Passed the Semester"
+  (click)="unenrollAllClassrooms()"
+>
+  Clear All Subjects
+</button>
+<mat-grid-list
+  class="example-card"
+  cols="2"
+  rowHeight="1:2"
+  *ngIf="classrooms && !isLoading"
+>
+  <mat-grid-tile *ngFor="let classroom of classrooms">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ classroom.subject_name }}</mat-card-title>
+        <mat-card-subtitle>{{ classroom.subject_code }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Department: {{ classroom.department }}</p>
+        <p>Semester: {{ classroom.semester }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-button
+          color="primary"
+          *ngIf="!checkIT(classroom._id)"
+          (click)="
+            enrollClassroom(classroom.subject_name, classroom.subject_code)
+          "
+        >
+          Enroll
+        </button>
+        <button
+          mat-button
+          color="warn"
+          *ngIf="checkIT(classroom._id)"
+          (click)="unenrollClassroom(classroom._id)"
+        >
+          Unenroll
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+<p *ngIf="!classrooms && !isLoading">What is this</p>

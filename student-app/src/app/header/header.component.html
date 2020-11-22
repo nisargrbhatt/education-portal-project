@@ -1,0 +1,54 @@
+<mat-toolbar color="primary" *ngIf="!isLoading && checks()">
+  <span>
+    <a routerLink="/">Educational Portal [Collage Name]></a>
+  </span>
+  <span class="spacer"></span>
+  <ul>
+    <li *ngIf="!isAuthenticated && !isLoading">
+      <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
+    </li>
+    <li *ngIf="isAuthenticated && !isLoading">
+      <a mat-button routerLink="/studentsubjects" routerLinkActive="mat-accent"
+        >Subjects</a
+      >
+    </li>
+    <li *ngIf="isAuthenticated && !isLoading">
+      <button
+        mat-button
+        [matMenuTriggerFor]="notifi"
+        matTooltip="Notifications from the Classrooms"
+        title="Notifications"
+      >
+        <mat-icon>all_inbox</mat-icon>
+      </button>
+      <mat-menu #notifi="matMenu">
+        <mat-accordion multi="true" *ngIf="notifications">
+          <mat-expansion-panel *ngFor="let mainNoti of notifications">
+            <mat-expansion-panel-header>
+              {{ mainNoti.subName }}
+            </mat-expansion-panel-header>
+            <mat-card *ngFor="let subNoti of mainNoti.notifi">
+              <mat-card-title>{{ subNoti.content }}</mat-card-title>
+              <mat-card-subtitle>{{ subNoti.date }}</mat-card-subtitle>
+            </mat-card>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <p class="info-text" *ngIf="!notifications && !isLoading">
+          No Notification
+        </p>
+      </mat-menu>
+    </li>
+    <li *ngIf="isAuthenticated && !isLoading">
+      <button mat-button [matMenuTriggerFor]="menu">
+        {{ userData.name }}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/profile">Profile</button>
+        <button mat-menu-item (click)="onLogout()">Log Out</button>
+      </mat-menu>
+    </li>
+    <!-- <li *ngIf="isAuthenticated && !isLoading">
+      <a mat-button (click)="onLogout()">Logout</a>
+    </li> -->
+  </ul>
+</mat-toolbar>

@@ -1,0 +1,107 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-list *ngIf="!isLoading && classroom">
+  <button
+    mat-button
+    color="primary"
+    [routerLink]="['/classroom-edit', classroom._id]"
+  >
+    Edit Information
+  </button>
+  <mat-card>
+    <mat-list-item>
+      <h1>Subject Name: {{ classroom.subject_name }}</h1>
+    </mat-list-item>
+  </mat-card>
+  <br />
+  <br />
+
+  <mat-card>
+    <mat-list-item>Subject Code: {{ classroom.subject_code }}</mat-list-item>
+  </mat-card>
+
+  <mat-card>
+    <mat-list-item>Department: {{ classroom.department }}</mat-list-item>
+  </mat-card>
+
+  <mat-card>
+    <mat-list-item>Semester: {{ classroom.semester }}</mat-list-item>
+  </mat-card>
+
+  <mat-card *ngIf="classroom.scheduled_lecture">
+    <mat-list-item
+      >Scheduled Lecture: {{ classroom.scheduled_lecture }}
+      <button mat-button color="warn" (click)="unscheduleLecture()">
+        Unschedule
+      </button>
+    </mat-list-item>
+  </mat-card>
+
+  <mat-card *ngIf="!classroom.scheduled_lecture">
+    <mat-list-item>
+      <form #lecForm="ngForm">
+        <mat-form-field>
+          <mat-label>Date of Lecture:</mat-label>
+          <input matInput type="date" placeholder="Date" #dateof required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Time of Lecture:</mat-label>
+          <input matInput type="time" placeholder="Time" #timeof required />
+        </mat-form-field>
+        <button
+          mat-button
+          color="primary"
+          [disabled]="lecForm.invalid"
+          (click)="scheduleLecture(dateof.value, timeof.value)"
+        >
+          Schedule
+        </button>
+      </form>
+    </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item>
+      <form #notForm="ngForm">
+        <mat-form-field>
+          <mat-label>Date of Lecture:</mat-label>
+          <input matInput type="date" placeholder="Date" #dateof required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Content:</mat-label>
+          <input matInput type="text" placeholder="Content" #content required />
+        </mat-form-field>
+        <button
+          mat-button
+          color="primary"
+          [disabled]="notForm.invalid"
+          (click)="addNotification(dateof.value, content.value)"
+        >
+          Add Notification
+        </button>
+      </form>
+    </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item
+      >Student Enrolled:
+      <table
+        mat-table
+        [dataSource]="classroom.student_enrolled"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="enrollment_no">
+          <th mat-header-cell *matHeaderCellDef>Enrollment No.</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.enrollment_no }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-list-item>
+  </mat-card>
+</mat-list>

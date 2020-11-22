@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onCreateClassroom()" *ngIf="!isLoading">
+    <mat-form-field>
+      <mat-label>Subject Name:</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Enter Subject Name"
+        formControlName="subject_name"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Subject Code:</mat-label>
+      <input
+        matInput
+        type="tel"
+        placeholder="Enter Subject Code"
+        formControlName="subject_code"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Department</mat-label>
+      <mat-select formControlName="department">
+        <mat-option
+          *ngFor="let department of departments"
+          [value]="department"
+          >{{ department }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Semester:</mat-label>
+      <mat-select formControlName="semester">
+        <mat-option *ngFor="let semester of semesters" [value]="semester">{{
+          semester
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      Update
+    </button>
+  </form>
+</mat-card>
