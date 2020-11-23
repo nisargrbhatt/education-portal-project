@@ -388,45 +388,47 @@ exports.clearSubject = (req, res, next) => {
       }
       subjectData = user.subjects;
     })
+    .then(() => {
+      const index = subjectData.findIndex((data) => {
+        return JSON.stringify(data) === JSON.stringify(checkData);
+      }, (checkData = req.body.subject));
+      if (index > -1) {
+        subjectData.splice(index, 1);
+        User.updateOne(
+          { _id: req.params.id },
+          {
+            subjects: subjectData,
+          }
+        )
+          .then((result) => {
+            if (result.n > 0) {
+              res.status(200).json({
+                message: "Subject cleared Successfully!",
+              });
+            } else {
+              res.status(401).json({
+                message: "Not Authorized",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            return res.status(500).json({
+              message: "Couldn't clear Subject",
+            });
+          });
+      } else {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+    })
     .catch((error) => {
       console.log(error);
       return res.status(500).json({
         message: "Couldn't clear Subject",
       });
     });
-  const index = subjectData.findIndex((data) => {
-    return JSON.stringify(data) === JSON.stringify(checkData);
-  }, (checkData = req.body.subject));
-  if (index > -1) {
-    subjectData.splice(index, -1);
-    User.updateOne(
-      { _id: req.params.id },
-      {
-        subjects: subjectData,
-      }
-    )
-      .then((result) => {
-        if (result.n > 0) {
-          res.status(200).json({
-            message: "Subject cleared Successfully!",
-          });
-        } else {
-          res.status(401).json({
-            message: "Not Authorized",
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        return res.status(500).json({
-          message: "Couldn't clear Subject",
-        });
-      });
-  } else {
-    return res.status(400).json({
-      message: "Bad Request/Bad Data",
-    });
-  }
 };
 
 exports.clearAllSubject = (req, res, next) => {

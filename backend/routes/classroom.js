@@ -49,5 +49,10 @@ router.get(
   checkAuth,
   classroomControllers.getNotification
 );
-
+router.put("/addsubmission/:id", checkAuth, classroomControllers.addSubmission);
+router.put(
+  "/clearsubmission/:id",
+  checkAuth,
+  classroomControllers.clearSubmission
+);
 module.exports = router;

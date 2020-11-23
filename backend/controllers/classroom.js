@@ -14,7 +14,7 @@ exports.createClassroom = (req, res, next) => {
     .save()
     .then((result) => {
       res.status(201).json({
-        message: "Classroom Created Successfull!",
+        message: "Classroom Created Successfully!",
       });
     })
     .catch((error) => {
@@ -375,37 +375,39 @@ exports.addNotification = (req, res, next) => {
         });
       }
     })
-    .catch((error) => {
-      console.log(error);
-      return res.status(500).json({
-        message: "Couldn't add Notification",
-      });
-    });
-  Classroom.updateOne(
-    {
-      _id: req.params.id,
-      subject_code: req.body.subject_code,
-      faculty: req.userDataA.userId,
-    },
-    {
-      notifications: notificationData,
-    }
-  )
-    .then((result) => {
-      if (result.n > 0) {
-        res.status(200).json({
-          message: "Notification added Successfully!",
+    .then(() => {
+      Classroom.updateOne(
+        {
+          _id: req.params.id,
+          subject_code: req.body.subject_code,
+          faculty: req.userDataA.userId,
+        },
+        {
+          notifications: notificationData,
+        }
+      )
+        .then((result) => {
+          if (result.n > 0) {
+            res.status(200).json({
+              message: "Notification added Successfully!",
+            });
+          } else {
+            res.status(401).json({
+              message: "Not Authorized",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          return res.status(500).json({
+            message: "Couldn't add notification!!!",
+          });
         });
-      } else {
-        res.status(401).json({
-          message: "Not Authorized",
-        });
-      }
     })
     .catch((error) => {
       console.log(error);
       return res.status(500).json({
-        message: "Couldn't add notification!!!",
+        message: "Couldn't add Notification",
       });
     });
 };
@@ -421,48 +423,50 @@ exports.deleteNotification = (req, res, next) => {
       }
       notificationData = classroom.notifications;
     })
+    .then(() => {
+      const index = notificationData.findIndex((data) => {
+        return JSON.stringify(data) === JSON.stringify(checkNoti);
+      }, (checkNoti = req.body.notification));
+      if (index > -1) {
+        notificationData.splice(index, 1);
+        Classroom.updateOne(
+          {
+            _id: req.params.id,
+            faculty: req.userDataA.userId,
+          },
+          {
+            notifications: notificationData,
+          }
+        )
+          .then((result) => {
+            if (result.n > 0) {
+              res.status(200).json({
+                message: "Notification deleted Successfully!",
+              });
+            } else {
+              res.status(401).json({
+                message: "Not Authorized",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            return res.status(500).json({
+              message: "Couldn't delete notification",
+            });
+          });
+      } else {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+    })
     .catch((error) => {
       console.log(error);
       return res.status(500).json({
         message: "Couldn't delete notification",
       });
     });
-  const index = notificationData.findIndex((data) => {
-    return JSON.stringify(data) === JSON.stringify(checkNoti);
-  }, (checkNoti = req.body.notification));
-  if (index > -1) {
-    notificationData.splice(index, 1);
-    Classroom.updateOne(
-      {
-        _id: req.params.id,
-        faculty: req.userDataA.userId,
-      },
-      {
-        notifications: notificationData,
-      }
-    )
-      .then((result) => {
-        if (result.n > 0) {
-          res.status(200).json({
-            message: "Notification deleted Successfully!",
-          });
-        } else {
-          res.status(401).json({
-            message: "Not Authorized",
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        return res.status(500).json({
-          message: "Couldn't delete notification",
-        });
-      });
-  } else {
-    return res.status(400).json({
-      message: "Bad Request/Bad Data",
-    });
-  }
 };
 
 exports.getClassroomFaculty = (req, res, next) => {
@@ -550,6 +554,111 @@ exports.getNotification = (req, res, next) => {
       console.log(error);
       return res.status(500).json({
         message: "Couldn't fetch Notification",
+      });
+    });
+};
+
+exports.addSubmission = (req, res, next) => {
+  let subData;
+  Classroom.findById(req.params.id)
+    .then((classroom) => {
+      if (!classroom) {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+      if (!classroom.submissions) {
+        subData = [];
+        subData.push(req.body.submission_id);
+      } else {
+        subData = classroom.submissions;
+        subData.push(req.body.submission_id);
+      }
+    })
+    .then(() => {
+      Classroom.updateOne(
+        { _id: req.params.id, faculty: req.userDataA.userId },
+        { submissions: subData }
+      )
+        .then((result) => {
+          if (result.n > 0) {
+            res.status(201).json({
+              message: "Submission Added Successfully!",
+            });
+          } else {
+            res.status(401).json({
+              message: "Not Authorized!",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(500).json({
+            message: "Couldn't add Submission!!!",
+          });
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Couldn't add Submission!!!",
+      });
+    });
+};
+
+exports.clearSubmission = (req, res, next) => {
+  let subData;
+  Classroom.findById(req.params.id)
+    .then((classroom) => {
+      if (!classroom) {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+      subData = classroom.submissions;
+    })
+    .then(() => {
+      const index = subData.findIndex((data) => {
+        return JSON.stringify(data) === JSON.stringify(checkData);
+      }, (checkData = req.body.submission_id));
+      if (index > -1) {
+        subData.splice(index, 1);
+        Classroom.updateOne(
+          {
+            _id: req.params.id,
+            faculty: req.userDataA.userId,
+          },
+          {
+            submissions: subData,
+          }
+        )
+          .then((result) => {
+            if (result.n > 0) {
+              res.status(200).json({
+                message: "Submission cleared Successfully!",
+              });
+            } else {
+              res.status(401).json({
+                message: "Not Authorized",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            return res.status(500).json({
+              message: "Couldn't clear Submission!!!",
+            });
+          });
+      } else {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).json({
+        message: "Couldn't clear Submission!!!",
       });
     });
 };

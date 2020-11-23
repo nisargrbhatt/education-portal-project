@@ -1,9 +1,7 @@
 const multer = require("multer");
 
 const MIME_TYPE_MAP = {
-  "image/png": "png",
-  "image/jpg": "jpg",
-  "image/jpeg": "jpg",
+  "application/pdf": "pdf",
 };
 
 const storage = multer.diskStorage({
@@ -14,7 +12,7 @@ const storage = multer.diskStorage({
       error = null;
     }
 
-    cb(error, "images"); // the Route should be relative to server.js file
+    cb(error, "pdfs"); // the Route should be relative to server.js file
   },
   filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(" ").join("-");
@@ -23,4 +21,4 @@ const storage = multer.diskStorage({
   },
 });
 
-module.exports = multer({ storage: storage }).single("photo");
+module.exports = multer({ storage: storage }).single("pdf");
