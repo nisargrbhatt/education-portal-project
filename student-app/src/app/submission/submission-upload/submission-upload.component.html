@@ -1,0 +1,50 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-list *ngIf="!isLoading && submission">
+  <mat-card>
+    <mat-list-item>
+      Submission Name: {{ submission.submission_name }}
+    </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item> Context: {{ submission.context }} </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item> Start Date: {{ submission.start_date }} </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item> Due Date: {{ submission.due_date }} </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item>
+      Subject Name: {{ submission.classroom_name }}
+    </mat-list-item>
+  </mat-card>
+  <mat-card *ngIf="!checkSubmit()">
+    <mat-list-item>
+      <form [formGroup]="form" (submit)="uploadSubmission()">
+        <mat-form-field>
+          <mat-label> Upload Pdf: </mat-label>
+          <input
+            matInput
+            type="file"
+            formControlName="file"
+            placeholder="Upload File"
+          />
+          <mat-error *ngIf="form.get('file').invalid">
+            Please upload valid PDF.
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-list-item>
+  </mat-card>
+  <mat-card *ngIf="checkSubmit() && index > -1">
+    <mat-list-item>
+      {{ submission.uploaded[index] }}
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="deleteSubmission(submission.uploaded[index])"
+      ></button>
+    </mat-list-item>
+  </mat-card>
+</mat-list>

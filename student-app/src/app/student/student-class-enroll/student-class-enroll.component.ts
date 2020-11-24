@@ -56,13 +56,6 @@ export class StudentClassEnrollComponent implements OnInit, OnDestroy {
       (response) => {
         console.log(response.message);
         this.userDataAll = response.userDetails;
-        // console.log(this.userDataAll.subjects);
-        // if (this.userDataAll.subjects.includes('5fb7e89943c59208bc1a80b4')) {
-        //   console.log('True');
-        // } else {
-        //   console.log('False');
-        // }
-
         this.getClassroom();
       },
       (error) => {
@@ -109,6 +102,7 @@ export class StudentClassEnrollComponent implements OnInit, OnDestroy {
       _id: this.userId,
       enrollment_no: this.userDataAll.enrollment_no,
     };
+
     this.studentService.unenrollClassroom(classId, studentData);
     this.openSnackBar('You have Unenrolled Classroom Successfully!');
     this.getProfile();
@@ -124,7 +118,7 @@ export class StudentClassEnrollComponent implements OnInit, OnDestroy {
       this.studentService.unenrollClassroom(subject, studentData);
     });
     this.openSnackBar('All Classes unenrolled Successfully!');
-    this.ngOnInit();
+    this.getProfile();
   }
   openSnackBar(message: string) {
     this._snackBar.open(message, 'Okay', {

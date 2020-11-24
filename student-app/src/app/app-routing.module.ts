@@ -8,6 +8,8 @@ import { StudentClassEnrollComponent } from './student/student-class-enroll/stud
 import { Page404notfoundComponent } from './page404notfound/page404notfound.component';
 import { ProfileSetupComponent } from './auth/profile/profile-setup/profile-setup.component';
 import { ProfileShowComponent } from './auth/profile/profile-show/profile-show.component';
+import { SubmissionsComponent } from './submission/submissions/submissions.component';
+import { SubmissionUploadComponent } from './submission/submission-upload/submission-upload.component';
 
 const routes: Routes = [
   { path: '', component: StudentDashboardComponent, canActivate: [AuthGuard] },
@@ -30,6 +32,16 @@ const routes: Routes = [
   {
     path: 'studentsubjects',
     component: StudentClassEnrollComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submissions',
+    component: SubmissionsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submission/:subId',
+    component: SubmissionUploadComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: Page404notfoundComponent },

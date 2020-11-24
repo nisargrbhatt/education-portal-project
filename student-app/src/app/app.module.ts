@@ -18,6 +18,8 @@ import { ErrorComponent } from './error/error.component';
 import { Page404notfoundComponent } from './page404notfound/page404notfound.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
+import { SubmissionsComponent } from './submission/submissions/submissions.component';
+import { SubmissionUploadComponent } from './submission/submission-upload/submission-upload.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { ErrorInterceptor } from './error-interceptor';
     HeaderComponent,
     ErrorComponent,
     Page404notfoundComponent,
+    SubmissionsComponent,
+    SubmissionUploadComponent,
   ],
   imports: [
     BrowserModule,
