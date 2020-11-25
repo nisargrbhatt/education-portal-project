@@ -43,16 +43,21 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
           this.getSubmission();
         }
       });
+    this.isLoading = false;
   }
   getSubmission() {
     this.isLoading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('classId')) {
         this.classId = paramMap.get('classId');
+        // console.log(this.classId);
+
         this.submissionService.getSubmissions(this.classId).subscribe(
           (response) => {
             console.log(response.message);
             this.submissions = response.submission;
+            // console.log(this.submissions);
+
             this.isLoading = false;
           },
           (error) => {

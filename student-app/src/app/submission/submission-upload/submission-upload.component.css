@@ -1,0 +1,10 @@
+input[type="file"] {
+  visibility: hidden;
+}
+mat-card {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+mat-spinner {
+  margin: auto;
+}

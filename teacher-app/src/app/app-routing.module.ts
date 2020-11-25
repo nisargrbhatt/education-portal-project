@@ -58,13 +58,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'submissions/:classId',
-    component: SubmissionsComponent,
+    path: 'submission/:subId',
+    component: SubmissionShowComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'submission/:classId',
-    component: SubmissionShowComponent,
+    path: 'submissions/:classId',
+    component: SubmissionsComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: Page404notfoundComponent },

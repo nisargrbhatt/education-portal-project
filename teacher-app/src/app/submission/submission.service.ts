@@ -10,12 +10,28 @@ const BACKEND_URL = environment.apiUrl + '/submission/';
 })
 export class SubmissionService {
   constructor(private http: HttpClient) {}
-  createSubmission(subData: any) {
+  createSubmission(subData: any, classId: string) {
     this.http
-      .post<{ message: string }>(BACKEND_URL + 'create', subData)
+      .post<{ message: string; subId: string }>(BACKEND_URL + 'create', subData)
       .subscribe(
         (response) => {
           console.log(response.message);
+          let subData1 = {
+            submission_id: response.subId,
+          };
+          this.http
+            .put<{ message: string }>(
+              environment.apiUrl + '/classroom/' + 'addsubmission/' + classId,
+              subData1
+            )
+            .subscribe(
+              (response1) => {
+                console.log(response1.message);
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
         },
         (error) => {
           console.log(error);
@@ -42,12 +58,28 @@ export class SubmissionService {
         }
       );
   }
-  deleteSubmission(subId: string) {
+  deleteSubmission(subId: string, classId: string) {
     this.http
       .delete<{ message: string }>(BACKEND_URL + 'delete/' + subId)
       .subscribe(
         (response) => {
           console.log(response.message);
+          let subData1 = {
+            submission_id: subId,
+          };
+          this.http
+            .put<{ message: string }>(
+              environment.apiUrl + '/classroom/' + 'clearsubmission/' + classId,
+              subData1
+            )
+            .subscribe(
+              (response1) => {
+                console.log(response1.message);
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
         },
         (error) => {
           console.log(error);

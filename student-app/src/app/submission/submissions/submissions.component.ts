@@ -18,7 +18,7 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
   private isAuthenticated = false;
   isLoading = false;
   private userDataAll: AuthModel;
-  submissions: [SubmissionModel[]];
+  submissions: Array<SubmissionModel[]> = [];
 
   constructor(
     private authService: AuthService,
@@ -67,6 +67,8 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
         (response) => {
           console.log(response.message);
           if (response.submission.length) {
+            console.log(response.submission);
+            // this.submissions.join(response.submission);
             this.submissions.push(response.submission);
           }
         },

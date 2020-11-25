@@ -25,6 +25,7 @@ export class SubmissionUploadComponent implements OnInit, OnDestroy {
   index: number;
   private userId: string;
   submission: SubmissionModel;
+  ourData: any;
 
   constructor(
     private authService: AuthService,
@@ -94,15 +95,19 @@ export class SubmissionUploadComponent implements OnInit, OnDestroy {
         enrollment_no: data.enrollment_no,
       };
     });
+
     let checkData = {
       id: this.userId,
       name: this.userDataAll.name,
       enrollment_no: this.userDataAll.enrollment_no,
     };
-    if (newData.includes(checkData)) {
-      this.index = newData.findIndex((data) => {
-        return JSON.stringify(data) === JSON.stringify(checkData);
-      });
+
+    this.index = newData.findIndex((data) => {
+      return JSON.stringify(data) === JSON.stringify(checkData);
+    });
+
+    if (this.index > -1) {
+      this.ourData = this.submission.uploaded[this.index];
       return true;
     } else {
       return false;
@@ -121,6 +126,16 @@ export class SubmissionUploadComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     );
+  }
+  onFilePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ file: file });
+    this.form.get('file').updateValueAndValidity();
+    const reader = new FileReader();
+    // reader.onload = () => {
+    //   this.imagePreview = reader.result as string;
+    // };
+    reader.readAsDataURL(file);
   }
   uploadSubmission() {
     if (this.form.invalid) {

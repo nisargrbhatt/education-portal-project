@@ -22,7 +22,7 @@ export class SubmissionService {
     );
   }
   getSubmissions(classId: string) {
-    return this.http.get<{ message: string; submission: [any] }>(
+    return this.http.get<{ message: string; submission: SubmissionModel[] }>(
       BACKEND_URL + 'getsubmissionids/' + classId
     );
   }

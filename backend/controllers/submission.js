@@ -15,6 +15,7 @@ exports.createSubmission = (req, res, next) => {
     .then((result) => {
       res.status(201).json({
         message: "Submission Created Successfully!",
+        subId: result._id,
       });
     })
     .catch((error) => {
@@ -261,7 +262,7 @@ exports.getSubmissionUpload = (req, res, next) => {
 };
 exports.getSubmissionClassid = (req, res, next) => {
   Submission.find({
-    classroom_id: req.params.classId,
+    classroom_id: req.params.id,
   })
     .then((submissions) => {
       res.status(200).json({

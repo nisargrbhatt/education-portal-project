@@ -36,6 +36,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.isAuthenticated) {
       this.getProfile();
     }
+    if (!this.isAuthenticated) {
+      this.isLoading = false;
+    }
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe((authStatus) => {
@@ -47,8 +50,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.getProfile();
         }
       });
-
-    this.isLoading = false;
   }
   checks() {
     if (this.router.url == '/profile/create') {
@@ -64,7 +65,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         console.log(response.message);
         this.userDataAll = response.userDetails;
         this.getNotifications();
-        this.isLoading = false;
       },
       (error) => {
         console.log(error);

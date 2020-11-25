@@ -89,6 +89,7 @@ export class SubmissionCreateComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     });
+    this.isLoading = false;
   }
   onSaveSubmission() {
     let submissionData;
@@ -104,7 +105,7 @@ export class SubmissionCreateComponent implements OnInit, OnDestroy {
         classroom_name: this.className,
         classroom_id: this.classId,
       };
-      this.submissionService.createSubmission(submissionData);
+      this.submissionService.createSubmission(submissionData, this.classId);
       this.router.navigate(['/']);
     } else if (this.mode == 'edit') {
       submissionData = {

@@ -44,35 +44,50 @@ export class SubmissionShowComponent implements OnInit, OnDestroy {
           this.getSubmission();
         }
       });
+
+    this.isLoading = false;
   }
   getSubmission() {
     this.isLoading = true;
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('subId')) {
-        this.subId = paramMap.get('subId');
-        this.submissionService.getSubmission(this.subId).subscribe(
-          (response) => {
-            console.log(response.message);
-            this.submission = response.submission;
-            this.dataSource = new MatTableDataSource(this.submission.uploaded);
-            this.isLoading = false;
-          },
-          (error) => {
-            console.log(error);
-            this.isLoading = false;
-          }
-        );
-      } else {
-        console.log('No params');
+    this.route.paramMap.subscribe(
+      (paramMap: ParamMap) => {
+        if (paramMap.has('subId')) {
+          this.subId = paramMap.get('subId');
+          // console.log(this.subId);
+
+          this.submissionService.getSubmission(this.subId).subscribe(
+            (response) => {
+              console.log(response.message);
+              this.submission = response.submission;
+              // console.log(response.submission);
+              if (this.submission.uploaded.length) {
+                this.dataSource = new MatTableDataSource(
+                  this.submission.uploaded
+                );
+                // this.dataSource = this.submission.uploaded;
+              }
+              this.isLoading = false;
+            },
+            (error) => {
+              console.log(error);
+              this.isLoading = false;
+            }
+          );
+        } else {
+          console.log('No params');
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-    });
+    );
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  deleteSubmission() {
-    this.submissionService.deleteSubmission(this.subId);
+  deleteSubmission(classId: string) {
+    this.submissionService.deleteSubmission(this.subId, classId);
     this.router.navigate(['/']);
   }
   ngOnDestroy() {

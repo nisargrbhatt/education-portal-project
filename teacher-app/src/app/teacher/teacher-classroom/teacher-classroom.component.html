@@ -2,14 +2,14 @@
 <mat-list *ngIf="!isLoading && classroom">
   <mat-card>
     <button
-      mat-button
+      mat-raised-button
       color="primary"
       [routerLink]="['/classroom-edit', classroom._id]"
     >
       Edit Information
     </button>
     <button
-      mat-button
+      mat-raised-button
       color="primary"
       [routerLink]="[
         '/submission-create',
@@ -20,11 +20,11 @@
       Add Submission
     </button>
     <button
-      mat-button
+      mat-raised-button
       color="primary"
       [routerLink]="['/submissions', classroom._id]"
     >
-      Add Submission
+      Show Submissions
     </button>
   </mat-card>
   <mat-card>
@@ -101,8 +101,9 @@
     </mat-list-item>
   </mat-card>
   <mat-card>
-    <mat-list-item
-      >Student Enrolled:
+    <mat-list-item>
+      Student Enrolled:
+      <br />
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
