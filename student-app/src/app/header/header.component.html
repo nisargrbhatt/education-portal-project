@@ -12,6 +12,12 @@
         >Subjects</a
       >
     </li>
+
+    <li *ngIf="isAuthenticated && !isLoading">
+      <a mat-button routerLink="/submissions" routerLinkActive="mat-accent"
+        >Submissions</a
+      >
+    </li>
     <li *ngIf="isAuthenticated && !isLoading">
       <button
         mat-button

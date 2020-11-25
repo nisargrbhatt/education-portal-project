@@ -97,7 +97,7 @@ exports.uploadSubmission = (req, res, next) => {
           {
             id: req.userDataA.userId,
             name: req.body.name,
-            enrollment_no: req.body.enrollment_no,
+            enrollment_no: Number(req.body.enrollment_no),
             file: url + "/pdfs/" + req.file.filename,
             upload_time: Date.now(),
           },
@@ -107,7 +107,7 @@ exports.uploadSubmission = (req, res, next) => {
         let subs = {
           id: req.userDataA.userId,
           name: req.body.name,
-          enrollment_no: req.body.enrollment_no,
+          enrollment_no: Number(req.body.enrollment_no),
           file: url + "/pdfs/" + req.file.filename,
           upload_time: Date.now(),
         };
@@ -234,15 +234,7 @@ exports.getSubmission = (req, res, next) => {
     .then((submission) => {
       res.status(200).json({
         message: "Submission fetched Successfully!",
-        submission: {
-          submission_name: submission.submission_name,
-          context: submission.context,
-          start_date: submission.start_date,
-          due_date: submission.due_date,
-          assign_by: submission.assign_by,
-          classroom_name: submission.classroom_name,
-          classroom_id: submission.classroom_id,
-        },
+        submission: submission,
       });
     })
     .catch((error) => {
@@ -257,7 +249,7 @@ exports.getSubmissionUpload = (req, res, next) => {
     .then((submission) => {
       res.status(200).json({
         message: "Submission fetched Successfully!",
-        submission: submission,
+        submission: submission.uploaded,
       });
     })
     .catch((error) => {

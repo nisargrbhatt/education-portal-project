@@ -20,6 +20,9 @@ import { TeacherClassroomSelectComponent } from './teacher/teacher-classroom-sel
 import { TeacherClassroomUpdateComponent } from './teacher/teacher-classroom-update/teacher-classroom-update.component';
 import { TeacherDashboardComponent } from './teacher/teacher-dashboard/teacher-dashboard.component';
 import { HeaderComponent } from './header/header.component';
+import { SubmissionsComponent } from './submission/submissions/submissions.component';
+import { SubmissionCreateComponent } from './submission/submission-create/submission-create.component';
+import { SubmissionShowComponent } from './submission/submission-show/submission-show.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { HeaderComponent } from './header/header.component';
     TeacherClassroomUpdateComponent,
     TeacherDashboardComponent,
     HeaderComponent,
+    SubmissionsComponent,
+    SubmissionCreateComponent,
+    SubmissionShowComponent,
   ],
   imports: [
     BrowserModule,

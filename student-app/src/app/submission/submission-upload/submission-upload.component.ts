@@ -127,6 +127,8 @@ export class SubmissionUploadComponent implements OnInit, OnDestroy {
       return;
     }
     let subData = new FormData();
+    subData.append('name', this.userDataAll.name);
+    subData.append('enrollment_no', String(this.userDataAll.enrollment_no));
     subData.append('pdf', this.form.value.file, this.userDataAll.name);
     this.submissionService.uploadSubmission(subData, this.subId);
     this.openSnackBar('Submission Uploaded Successfully!');

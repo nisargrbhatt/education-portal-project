@@ -79,17 +79,22 @@ export class ProfileSetupComponent implements OnInit, OnDestroy {
         this.mode = 'edit';
         this.userId = paramMap.get('userId');
         this.isLoading = true;
-        this.profileService.getProfile().subscribe((profileData) => {
-          this.isLoading = false;
-          this.profileData = profileData.userDetails;
-          this.imagePath = this.profileData.photo;
-          this.form.setValue({
-            name: this.profileData.name,
-            department: this.profileData.department,
-            image: this.profileData.photo,
-            contact_no: this.profileData.contact_no,
-          });
-        });
+        this.profileService.getProfile().subscribe(
+          (profileData) => {
+            this.isLoading = false;
+            this.profileData = profileData.userDetails;
+            this.imagePath = this.profileData.photo;
+            this.form.setValue({
+              name: this.profileData.name,
+              department: this.profileData.department,
+              image: this.profileData.photo,
+              contact_no: this.profileData.contact_no,
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       } else {
         this.mode = 'create';
       }

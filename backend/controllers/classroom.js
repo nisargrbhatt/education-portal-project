@@ -120,7 +120,6 @@ exports.enrollStudent = (req, res, next) => {
     subject_code: req.body.subject_code,
   })
     .then((classroom) => {
-      console.log("Here 1");
       classId = classroom._id;
       if (!classroom.student_enrolled) {
         studentData = [
@@ -140,7 +139,6 @@ exports.enrollStudent = (req, res, next) => {
       }
     })
     .then(() => {
-      console.log("Here 2");
       Classroom.updateOne(
         {
           subject_name: req.body.subject_name,
@@ -175,13 +173,12 @@ exports.enrollStudent = (req, res, next) => {
         message: "Couldn't enroll Student!!!",
       });
     });
-  console.log("Student Data");
-  console.log(studentData);
 };
 
 exports.unenrollStudent = (req, res, next) => {
   let studentData;
   let classId;
+
   Classroom.findOne({ _id: req.params.id })
     .then((classroom) => {
       classId = classroom._id;
@@ -192,48 +189,53 @@ exports.unenrollStudent = (req, res, next) => {
       }
       studentData = classroom.student_enrolled;
     })
+    .then(() => {
+      return studentData.findIndex((data) => {
+        return JSON.stringify(data) === JSON.stringify(req.body);
+      });
+    })
+    .then((index) => {
+      console.log(index);
+      if (index > -1) {
+        studentData.splice(index, 1);
+        Classroom.updateOne(
+          {
+            _id: req.params.id,
+          },
+          {
+            student_enrolled: studentData,
+          }
+        )
+          .then((result) => {
+            if (result.n > 0) {
+              res.status(200).json({
+                message: "Unenrolled student Successfully!",
+                classId: classId,
+              });
+            } else {
+              res.status(401).json({
+                message: "Not Authorized",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            return res.status(500).json({
+              message: "Couldn't unenroll student",
+            });
+          });
+      } else {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+    })
     .catch((error) => {
       console.log(error);
       return res.status(500).json({
         message: "Couldn't unenroll student",
       });
     });
-  const index = studentData.findIndex((data) => {
-    return JSON.stringify(data) === JSON.stringify(checkData);
-  }, (checkData = req.body.studentData));
-  if (index > -1) {
-    notificationData.splice(index, 1);
-    Classroom.updateOne(
-      {
-        _id: req.params.id,
-      },
-      {
-        student_enrolled: studentData,
-      }
-    )
-      .then((result) => {
-        if (result.n > 0) {
-          res.status(200).json({
-            message: "Unenrolled student Successfully!",
-            classId: classId,
-          });
-        } else {
-          res.status(401).json({
-            message: "Not Authorized",
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        return res.status(500).json({
-          message: "Couldn't unenroll student",
-        });
-      });
-  } else {
-    return res.status(400).json({
-      message: "Bad Request/Bad Data",
-    });
-  }
 };
 
 exports.addAttendance = (req, res, next) => {

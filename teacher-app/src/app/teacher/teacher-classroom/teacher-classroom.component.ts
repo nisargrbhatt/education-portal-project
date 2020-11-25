@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/auth.service';
 import { TeacherService } from '../teacher.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-teacher-classroom',
@@ -15,6 +16,7 @@ export class TeacherClassroomComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
   displayedColumns = ['name', 'enrollment_no'];
+  dataSource: any;
   classId: string;
   classroom: any;
 
@@ -35,6 +37,9 @@ export class TeacherClassroomComponent implements OnInit, OnDestroy {
           (response) => {
             console.log(response.message);
             this.classroom = response.classroom;
+            this.dataSource = new MatTableDataSource(
+              this.classroom.student_enrolled
+            );
           },
           (error) => {
             console.log(error);

@@ -37,6 +37,7 @@ app.use(
 //Statics
 
 app.use("/images", express.static(path.join("images")));
+app.use("/pdfs", express.static(path.join("pdfs")));
 
 // CORS Controls
 app.use((req, res, next) => {

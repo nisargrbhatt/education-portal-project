@@ -66,7 +66,9 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
       this.submissionService.getSubmissions(data).subscribe(
         (response) => {
           console.log(response.message);
-          this.submissions.push(response.submission);
+          if (response.submission.length) {
+            this.submissions.push(response.submission);
+          }
         },
         (error) => {
           console.log(error);

@@ -10,6 +10,9 @@ import { Page404notfoundComponent } from './page404notfound/page404notfound.comp
 import { TeacherClassroomSelectComponent } from './teacher/teacher-classroom-select/teacher-classroom-select.component';
 import { TeacherClassroomComponent } from './teacher/teacher-classroom/teacher-classroom.component';
 import { TeacherClassroomUpdateComponent } from './teacher/teacher-classroom-update/teacher-classroom-update.component';
+import { SubmissionCreateComponent } from './submission/submission-create/submission-create.component';
+import { SubmissionsComponent } from './submission/submissions/submissions.component';
+import { SubmissionShowComponent } from './submission/submission-show/submission-show.component';
 
 const routes: Routes = [
   { path: '', component: TeacherDashboardComponent, canActivate: [AuthGuard] },
@@ -42,6 +45,26 @@ const routes: Routes = [
   {
     path: 'classroom-select',
     component: TeacherClassroomSelectComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submission-create/:classId/:className',
+    component: SubmissionCreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submission-edit/:subId',
+    component: SubmissionCreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submissions/:classId',
+    component: SubmissionsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submission/:classId',
+    component: SubmissionShowComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: Page404notfoundComponent },

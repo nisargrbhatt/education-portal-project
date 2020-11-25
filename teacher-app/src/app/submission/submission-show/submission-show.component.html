@@ -1,0 +1,76 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-list *ngIf="!isLoading && submission">
+  <mat-card>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/submission-edit', subId]"
+    >
+      Edit
+    </button>
+    <button mat-raised-button color="warn" (click)="deleteSubmission()">
+      Delete
+    </button>
+  </mat-card>
+  <mat-card>
+    <mat-list-item>
+      Submission Name: {{ submission.submission_name }}
+    </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item> Context: {{ submission.context }} </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item> Start Date: {{ submission.start_date }} </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item> Due Date: {{ submission.due_date }} </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item>
+      Subject Name: {{ submission.classroom_name }}
+    </mat-list-item>
+  </mat-card>
+  <mat-card>
+    <mat-list-item
+      >Student Uploaded:
+
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Ex. Enrollment No, Name, etc."
+          #input
+        />
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="enrollment_no">
+          <th mat-header-cell *matHeaderCellDef>Enrollment No</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.enrollment_no }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="enrollment_no">
+          <th mat-header-cell *matHeaderCellDef>File</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.file }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="enrollment_no">
+          <th mat-header-cell *matHeaderCellDef>Upload Time</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.upload_time }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-list-item>
+  </mat-card>
+</mat-list>

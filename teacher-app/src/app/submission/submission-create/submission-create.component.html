@@ -1,0 +1,37 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSaveSubmission()" *ngIf="!isLoading">
+    <mat-form-field>
+      <mat-label> Submission Name: </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="submission_name"
+        placeholder="Submission Name"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> Context: </mat-label>
+      <textarea
+        rows="4"
+        formControlName="context"
+        matInput
+        placeholder="Submission Details"
+      ></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> Start Date: </mat-label>
+      <input matInput type="date" formControlName="start_date" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> End Date: </mat-label>
+      <input matInput type="date" formControlName="due_date" />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="form.invalid"
+    ></button>
+  </form>
+</mat-card>
