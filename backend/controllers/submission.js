@@ -172,6 +172,7 @@ exports.deleteUpload = (req, res, next) => {
   Submission.findById(req.params.id)
     .then((submission) => {
       if (!submission) {
+        console.log("Here");
         return res.status(400).json({
           message: "Bad Request/Bad Data",
         });
@@ -187,7 +188,18 @@ exports.deleteUpload = (req, res, next) => {
         upload_time: req.body.upload_time,
       };
       const index = submissionData.findIndex((data) => {
-        return JSON.stringify(data) === JSON.stringify(checkData);
+        // return JSON.stringify(data) === JSON.stringify(checkData);
+        // console.log(data);
+        // console.log(checkData);
+        if (
+          data.name == checkData.name &&
+          data.id == checkData.id &&
+          data.enrollment_no == checkData.enrollment_no
+        ) {
+          return true;
+        } else {
+          return false;
+        }
       }, (checkData = subs));
       if (index > -1) {
         submissionData.splice(index, 1);

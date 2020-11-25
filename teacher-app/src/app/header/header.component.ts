@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userId: string;
   userData: any;
   userDataAll: AuthModel;
-  notifications: [any];
+  notifications: Array<any> = [];
 
   constructor(
     private teacherService: TeacherService,
@@ -28,44 +28,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  // ngOnInit() {
-  //   this.isAuthenticated = this.authService.getIsAuth();
-  //   this.isLoading = true;
-  //   this.authStatusSub = this.authService
-  //     .getAuthStatusListener()
-  //     .subscribe((authStatus) => {
-  //       this.isAuthenticated = authStatus;
-  //     });
-  //   if (!this.isAuthenticated) {
-  //     this.isLoading = false;
-  //     this.router.navigate(['/login']);
-  //     return;
-  //   }
-  //   this.profileService.getProfile().subscribe((response) => {
-  //     console.log(response.message);
-  //     this.userDataAll = response.userDetails;
-  //   });
-  //   this.userId = this.authService.getUserId();
-
-  //   if (this.userDataAll.subjects) {
-  //     this.userDataAll.subjects.forEach((subject) => {
-  //       this.teacherService.getNotification(subject).subscribe(
-  //         (response) => {
-  //           console.log(response.message);
-  //           this.notifications.push({
-  //             subName: response.subject_name,
-  //             notifi: response.notification,
-  //             faculty: response.faculty,
-  //             classId: subject,
-  //           });
-  //         },
-  //         (error) => {
-  //           // console.log(error);
-  //         }
-  //       );
-  //     });
-  //   }
-  // }
   ngOnInit() {
     this.isAuthenticated = this.authService.getIsAuth();
     this.isLoading = true;
@@ -142,7 +104,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       date: date,
       content: content,
     });
-    this.ngOnInit();
+    this.notifications = [];
+    this.getProfile();
   }
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

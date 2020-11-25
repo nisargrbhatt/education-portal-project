@@ -25,3 +25,7 @@ ul {
 mat-card {
   width: 100%;
 }
+.notification_css {
+  width: 150px;
+  padding: 5px;
+}

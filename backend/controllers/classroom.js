@@ -426,9 +426,18 @@ exports.deleteNotification = (req, res, next) => {
       notificationData = classroom.notifications;
     })
     .then(() => {
-      const index = notificationData.findIndex((data) => {
-        return JSON.stringify(data) === JSON.stringify(checkNoti);
-      }, (checkNoti = req.body.notification));
+      return notificationData.findIndex((data) => {
+        if (
+          JSON.stringify(data.date) == JSON.stringify(checkNoti.date) &&
+          data.content == checkNoti.content
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      }, (checkNoti = req.body));
+    })
+    .then((index) => {
       if (index > -1) {
         notificationData.splice(index, 1);
         Classroom.updateOne(

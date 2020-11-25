@@ -21,7 +21,7 @@
       >
         <mat-icon>all_inbox</mat-icon>
       </button>
-      <mat-menu #notifi="matMenu">
+      <mat-menu #notifi="matMenu" class="notification_css">
         <mat-accordion multi="true" *ngIf="notifications">
           <mat-expansion-panel *ngFor="let mainNoti of notifications">
             <mat-expansion-panel-header>
@@ -45,7 +45,7 @@
             </mat-card>
           </mat-expansion-panel>
         </mat-accordion>
-        <p class="info-text" *ngIf="!notifications!; isLoading">
+        <p class="info-text" *ngIf="notifications.length == 0 && !isLoading">
           No Notification
         </p>
       </mat-menu>

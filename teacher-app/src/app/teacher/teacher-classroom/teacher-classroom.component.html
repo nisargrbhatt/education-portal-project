@@ -68,7 +68,7 @@
           <input matInput type="time" placeholder="Time" #timeof required />
         </mat-form-field>
         <button
-          mat-button
+          mat-raised-button
           color="primary"
           [disabled]="lecForm.invalid"
           (click)="scheduleLecture(dateof.value, timeof.value)"
@@ -90,7 +90,7 @@
           <input matInput type="text" placeholder="Content" #content required />
         </mat-form-field>
         <button
-          mat-button
+          mat-raised-button
           color="primary"
           [disabled]="notForm.invalid"
           (click)="addNotification(dateof.value, content.value)"
