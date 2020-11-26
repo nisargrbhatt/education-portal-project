@@ -7,6 +7,7 @@ const path = require("path");
 const userRoutes = require("./routes/user");
 const classroomRoutes = require("./routes/classroom");
 const submissionRoutes = require("./routes/submission");
+const testRoutes = require("./routes/test");
 
 const app = express();
 
@@ -60,5 +61,6 @@ app.use((req, res, next) => {
 app.use("/user", userRoutes);
 app.use("/classroom", classroomRoutes);
 app.use("/submission", submissionRoutes);
+app.use("/test", testRoutes);
 
 module.exports = app;

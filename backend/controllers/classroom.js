@@ -673,3 +673,108 @@ exports.clearSubmission = (req, res, next) => {
       });
     });
 };
+
+exports.addTest = (req, res, next) => {
+  let subData;
+  Classroom.findById(req.params.id)
+    .then((classroom) => {
+      if (!classroom) {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+      if (!classroom.tests) {
+        subData = [];
+        subData.push(req.body.test_id);
+      } else {
+        subData = classroom.tests;
+        subData.push(req.body.test_id);
+      }
+    })
+    .then(() => {
+      Classroom.updateOne(
+        { _id: req.params.id, faculty: req.userDataA.userId },
+        { submissions: subData }
+      )
+        .then((result) => {
+          if (result.n > 0) {
+            res.status(201).json({
+              message: "Submission Added Successfully!",
+            });
+          } else {
+            res.status(401).json({
+              message: "Not Authorized!",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(500).json({
+            message: "Couldn't add Submission!!!",
+          });
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: "Couldn't add Submission!!!",
+      });
+    });
+};
+
+exports.clearTest = (req, res, next) => {
+  let subData;
+  Classroom.findById(req.params.id)
+    .then((classroom) => {
+      if (!classroom) {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+      subData = classroom.tests;
+    })
+    .then(() => {
+      const index = subData.findIndex((data) => {
+        return JSON.stringify(data) === JSON.stringify(checkData);
+      }, (checkData = req.body.test_id));
+      if (index > -1) {
+        subData.splice(index, 1);
+        Classroom.updateOne(
+          {
+            _id: req.params.id,
+            faculty: req.userDataA.userId,
+          },
+          {
+            submissions: subData,
+          }
+        )
+          .then((result) => {
+            if (result.n > 0) {
+              res.status(200).json({
+                message: "Submission cleared Successfully!",
+              });
+            } else {
+              res.status(401).json({
+                message: "Not Authorized",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            return res.status(500).json({
+              message: "Couldn't clear Submission!!!",
+            });
+          });
+      } else {
+        return res.status(400).json({
+          message: "Bad Request/Bad Data",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).json({
+        message: "Couldn't clear Submission!!!",
+      });
+    });
+};

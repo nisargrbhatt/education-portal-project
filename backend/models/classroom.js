@@ -59,6 +59,9 @@ const classroomSchema = mongoose.Schema({
   submissions: {
     type: [String],
   },
+  tests: {
+    type: [String],
+  },
 });
 
 module.exports = mongoose.model("Classroom", classroomSchema);

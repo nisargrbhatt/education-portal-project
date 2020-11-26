@@ -55,4 +55,7 @@ router.put(
   checkAuth,
   classroomControllers.clearSubmission
 );
+router.put("/addtest/:id", checkAuth, classroomControllers.addTest);
+router.put("/cleartest/:id", checkAuth, classroomControllers.clearTest);
+
 module.exports = router;
