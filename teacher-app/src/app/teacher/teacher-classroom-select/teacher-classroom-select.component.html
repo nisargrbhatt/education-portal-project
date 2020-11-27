@@ -1,6 +1,10 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <mat-card>
-  <form #checkForm="ngForm" *ngIf="!isLoading">
+  <form
+    #checkForm="ngForm"
+    *ngIf="!isLoading"
+    (ngSubmit)="getClassrooms(sem.value, dept.value)"
+  >
     <mat-form-field>
       <mat-label>Semester: </mat-label>
       <mat-select #sem required>
@@ -19,12 +23,7 @@
         >
       </mat-select>
     </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="checkForm.invalid"
-      (click)="getClassrooms(sem.value, dept.value)"
-    >
+    <button mat-raised-button color="primary" [disabled]="checkForm.invalid">
       Get Classrooms
     </button>
   </form>

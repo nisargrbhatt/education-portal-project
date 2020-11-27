@@ -6,7 +6,7 @@
       class="example-card"
       cols="2"
       rowHeight="1:2"
-      *ngIf="tests && !isLoading"
+      *ngIf="tests.length && !isLoading"
     >
       <mat-grid-tile *ngFor="let test of tests">
         <div *ngFor="let subtest of test">
@@ -34,14 +34,14 @@
         </div>
       </mat-grid-tile>
     </mat-grid-list>
-    <p *ngIf="!tests && !isLoading">No Ongoing Test For Now 😆</p>
+    <p *ngIf="!tests.length && !isLoading">No Ongoing Test For Now 😆</p>
   </mat-tab>
   <mat-tab label="Past"
     ><mat-grid-list
       class="example-card"
       cols="2"
       rowHeight="1:2"
-      *ngIf="tests && !isLoading"
+      *ngIf="tests.length && !isLoading"
     >
       <mat-grid-tile *ngFor="let test of tests">
         <div *ngFor="let subtest of test">
@@ -69,6 +69,6 @@
         </div>
       </mat-grid-tile>
     </mat-grid-list>
-    <p *ngIf="!tests && !isLoading">No Past Test For Now 😆</p>
+    <p *ngIf="!tests.length && !isLoading">No Past Test For Now 😆</p>
   </mat-tab>
 </mat-tab-group>

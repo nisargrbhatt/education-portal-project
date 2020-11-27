@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
-import { TestService } from './../test.service';
+import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+
+import { AuthService } from 'src/app/auth/auth.service';
+import { TestService } from './../test.service';
 import { TestModel } from './../test.model';
 
 @Component({
@@ -31,7 +33,8 @@ export class TestCreateComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private testService: TestService,
-    private authService: AuthService
+    private authService: AuthService,
+    public datepipe: DatePipe
   ) {}
 
   ngOnInit() {
@@ -64,6 +67,7 @@ export class TestCreateComponent implements OnInit, OnDestroy {
         this.mode = 'create';
         this.classId = paramMap.get('classId');
         this.className = paramMap.get('className');
+        this.isLoading = false;
       } else if (paramMap.has('testId')) {
         this.mode = 'edit';
         this.testId = paramMap.get('testId');
@@ -73,10 +77,16 @@ export class TestCreateComponent implements OnInit, OnDestroy {
             this.test = response.test;
             this.form.setValue({
               test_name: this.test.test_name,
-              start_date: this.test.start_date,
-              due_date: this.test.due_date,
+              start_date: this.datepipe.transform(
+                this.test.start_date,
+                'yyyy-MM-dd'
+              ),
+              due_date: this.datepipe.transform(
+                this.test.due_date,
+                'yyyy-MM-dd'
+              ),
             });
-            this.questions = this.test.test_questions;
+            this.questions = this.test.test_question;
             this.isLoading = false;
           },
           (error) => {
@@ -90,7 +100,7 @@ export class TestCreateComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.isLoading = false;
+    // this.isLoading = false;
   }
   addQuestion(form: NgForm) {
     let ops = [];
@@ -103,7 +113,9 @@ export class TestCreateComponent implements OnInit, OnDestroy {
       options: ops,
       answer: ops[Number(form.value.answer)],
     };
+    console.log(questionData);
     this.questions.push(questionData);
+    console.log(this.questions);
     form.reset();
   }
   removeQuestion(index: number) {

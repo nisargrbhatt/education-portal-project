@@ -93,8 +93,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         );
       });
+      this.isLoading = false;
     }
-    this.isLoading = false;
   }
   onLogout() {
     this.authService.logout();

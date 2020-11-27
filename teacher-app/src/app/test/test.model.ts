@@ -6,7 +6,7 @@ export interface TestModel {
   assign_by: string;
   classroom_name: string;
   classroom_id: string;
-  test_questions: Array<{
+  test_question: Array<{
     question: string;
     options: string[];
     answer: string;

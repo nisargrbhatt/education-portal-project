@@ -90,11 +90,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
           },
           (error) => {
             console.log(error);
+            this.isLoading = false;
           }
         );
       });
+      this.isLoading = false;
     }
-    this.isLoading = false;
   }
   onLogout() {
     this.authService.logout();

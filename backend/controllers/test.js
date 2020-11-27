@@ -113,8 +113,8 @@ exports.addUserResponse = (req, res, next) => {
           name: req.body.name,
           enrollment_no: req.body.enrollment_no,
           answers: req.body.answers,
-          marks: findMarks(req.body.answers, test.test_question),
           submit_time: Date.now(),
+          marks: findMarks(req.body.answers, test.test_question),
         };
         testData.push(testuData);
       } else {
@@ -125,7 +125,7 @@ exports.addUserResponse = (req, res, next) => {
           enrollment_no: req.body.enrollment_no,
           answers: req.body.answers,
           marks: findMarks(req.body.answers, test.test_question),
-          submit_date: Date.now(),
+          submit_time: Date.now(),
         };
         const index = testData.findIndex((data) => {
           if (

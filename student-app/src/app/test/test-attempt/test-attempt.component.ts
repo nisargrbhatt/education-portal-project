@@ -53,7 +53,6 @@ export class TestAttemptComponent implements OnInit {
           this.getProfile();
         }
       });
-    this.isLoading = false;
   }
   getProfile() {
     this.isLoading = true;
@@ -78,7 +77,7 @@ export class TestAttemptComponent implements OnInit {
           (response) => {
             console.log(response.message);
             this.test = response.test;
-            this.testQuestion = this.test.test_questions;
+            this.testQuestion = this.test.test_question;
             this.isLoading = false;
           },
           (error) => {
@@ -92,7 +91,7 @@ export class TestAttemptComponent implements OnInit {
     });
   }
   checkAttempt() {
-    if (!this.test.test_responses) {
+    if (!this.test.test_responses.length) {
       return false;
     }
     let responseData = this.test.test_responses;
@@ -124,7 +123,7 @@ export class TestAttemptComponent implements OnInit {
     });
   }
   attemptTest(form: NgForm) {
-    for (let i = 0; i < this.test.test_questions.length; i++) {
+    for (let i = 0; i < this.test.test_question.length; i++) {
       let q = 'q' + i;
       this.answer.push(form.value[q]);
     }

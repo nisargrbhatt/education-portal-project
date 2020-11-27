@@ -13,3 +13,7 @@ mat-card {
 mat-spinner {
   margin: auto;
 }
+
+.testTable {
+  width: 100%;
+}
