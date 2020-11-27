@@ -1,33 +1,36 @@
-import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { SubmissionService } from './../submission.service';
-import { SubmissionModel } from './../submission.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
+import { TestService } from './../test.service';
+import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { TestModel } from './../test.model';
 
 @Component({
-  selector: 'app-submission-create',
-  templateUrl: './submission-create.component.html',
-  styleUrls: ['./submission-create.component.css'],
+  selector: 'app-test-create',
+  templateUrl: './test-create.component.html',
+  styleUrls: ['./test-create.component.css'],
 })
-export class SubmissionCreateComponent implements OnInit, OnDestroy {
+export class TestCreateComponent implements OnInit, OnDestroy {
   private mode = 'create';
-  private subId: string;
+  private testId: string;
   private classId: string;
   private className: string;
-  private isAuthenticated = false;
-  private submission: SubmissionModel;
   private authStatusSub: Subscription;
+  private isAuthenticated = false;
+  private test: TestModel;
   isLoading = false;
-
   form: FormGroup;
+  questions: Array<{
+    question: string;
+    options: string[];
+    answer: string;
+  }> = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private submissionService: SubmissionService,
+    private testService: TestService,
     private authService: AuthService
   ) {}
 
@@ -46,10 +49,7 @@ export class SubmissionCreateComponent implements OnInit, OnDestroy {
         }
       });
     this.form = new FormGroup({
-      submission_name: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      context: new FormControl(null, {
+      test_name: new FormControl(null, {
         validators: [Validators.required],
       }),
       start_date: new FormControl(null, {
@@ -64,19 +64,19 @@ export class SubmissionCreateComponent implements OnInit, OnDestroy {
         this.mode = 'create';
         this.classId = paramMap.get('classId');
         this.className = paramMap.get('className');
-      } else if (paramMap.has('subId')) {
+      } else if (paramMap.has('testId')) {
         this.mode = 'edit';
-        this.subId = paramMap.get('subId');
-        this.submissionService.getSubmission(this.subId).subscribe(
+        this.testId = paramMap.get('testId');
+        this.testService.getTest(this.testId).subscribe(
           (response) => {
             console.log(response.message);
-            this.submission = response.submission;
+            this.test = response.test;
             this.form.setValue({
-              submission_name: this.submission.submission_name,
-              context: this.submission.context,
-              start_date: this.submission.start_date,
-              due_date: this.submission.due_date,
+              test_name: this.test.test_name,
+              start_date: this.test.start_date,
+              due_date: this.test.due_date,
             });
+            this.questions = this.test.test_questions;
             this.isLoading = false;
           },
           (error) => {
@@ -89,32 +89,58 @@ export class SubmissionCreateComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     });
+
     this.isLoading = false;
   }
-  onSaveSubmission() {
-    let submissionData;
-    if (this.form.invalid) {
+  addQuestion(form: NgForm) {
+    let ops = [];
+    ops.push(form.value.op1);
+    ops.push(form.value.op2);
+    ops.push(form.value.op3);
+    ops.push(form.value.op4);
+    let questionData = {
+      question: form.value.question,
+      options: ops,
+      answer: ops[Number(form.value.answer)],
+    };
+    this.questions.push(questionData);
+    form.reset();
+  }
+  removeQuestion(index: number) {
+    this.questions.splice(index, 1);
+  }
+  checkInvalid() {
+    if (this.form.invalid || this.questions.length == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  saveTest() {
+    let testData;
+    if (this.form.invalid || this.questions.length == 0) {
       return;
     }
     if (this.mode == 'create') {
-      submissionData = {
-        submission_name: this.form.value.submission_name,
-        context: this.form.value.context,
+      testData = {
+        test_name: this.form.value.test_name,
         start_date: this.form.value.start_date,
         due_date: this.form.value.due_date,
         classroom_name: this.className,
         classroom_id: this.classId,
+        test_question: this.questions,
       };
-      this.submissionService.createSubmission(submissionData, this.classId);
+      this.testService.createTest(testData, this.classId);
       this.router.navigate(['/']);
     } else if (this.mode == 'edit') {
-      submissionData = {
-        submission_name: this.form.value.submission_name,
-        context: this.form.value.context,
+      testData = {
+        test_name: this.form.value.test_name,
         start_date: this.form.value.start_date,
         due_date: this.form.value.due_date,
+        test_question: this.questions,
       };
-      this.submissionService.updateSubmission(this.subId, submissionData);
+      this.testService.updateTest(testData, this.testId);
       this.router.navigate(['/']);
     } else {
       console.log('What is this?');

@@ -19,6 +19,9 @@
       >
     </li>
     <li *ngIf="isAuthenticated && !isLoading">
+      <a mat-button routerLink="/tests" routerLinkActive="mat-accent">Tests</a>
+    </li>
+    <li *ngIf="isAuthenticated && !isLoading">
       <button
         mat-button
         [matMenuTriggerFor]="notifi"

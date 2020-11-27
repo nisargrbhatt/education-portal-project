@@ -1,0 +1,15 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+mat-card {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+mat-spinner {
+  margin: auto;
+}

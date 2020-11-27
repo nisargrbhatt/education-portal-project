@@ -1,30 +1,29 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-import { AuthModel } from 'src/app/auth/auth.model';
-import { AuthService } from 'src/app/auth/auth.service';
-import { ProfileService } from './../../auth/profile.service';
-import { SubmissionService } from './../submission.service';
-import { SubmissionModel } from './../submission.model';
+import { AuthModel } from './../../auth/auth.model';
+import { TestModel } from '../test.model';
+import { AuthService } from './../../auth/auth.service';
+import { TestService } from './../test.service';
+import { Router } from '@angular/router';
+import { ProfileService } from 'src/app/auth/profile.service';
 
 @Component({
-  selector: 'app-submissions',
-  templateUrl: './submissions.component.html',
-  styleUrls: ['./submissions.component.css'],
+  selector: 'app-tests',
+  templateUrl: './tests.component.html',
+  styleUrls: ['./tests.component.css'],
 })
-export class SubmissionsComponent implements OnInit, OnDestroy {
+export class TestsComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   private isAuthenticated = false;
   isLoading = false;
   private userDataAll: AuthModel;
-  submissions: Array<SubmissionModel[]> = [];
+  tests: Array<TestModel[]> = [];
 
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,
     private router: Router,
-    private submissionService: SubmissionService
+    private testService: TestService
   ) {}
 
   ngOnInit() {
@@ -52,7 +51,7 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
       (response) => {
         console.log(response.message);
         this.userDataAll = response.userDetails;
-        this.getSubmissions();
+        this.getTests();
       },
       (error) => {
         console.log(error);
@@ -60,16 +59,15 @@ export class SubmissionsComponent implements OnInit, OnDestroy {
       }
     );
   }
-  getSubmissions() {
+  getTests() {
     this.isLoading = true;
     this.userDataAll.subjects.forEach((data) => {
-      this.submissionService.getSubmissions(data).subscribe(
+      this.testService.getTestClassid(data).subscribe(
         (response) => {
           console.log(response.message);
-          if (response.submission.length) {
-            console.log(response.submission);
-            // this.submissions.join(response.submission);
-            this.submissions.push(response.submission);
+          if (response.test.length) {
+            console.log(response.test);
+            this.tests.push(response.test);
           }
         },
         (error) => {

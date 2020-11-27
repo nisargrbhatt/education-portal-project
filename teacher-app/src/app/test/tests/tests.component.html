@@ -1,0 +1,26 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-grid-list
+  class="example-card"
+  cols="2"
+  rowHeight="1:2"
+  *ngIf="tests && !isLoading"
+>
+  <mat-grid-tile *ngFor="let test of tests">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ test.test_name }}</mat-card-title>
+        <mat-card-subtitle>{{ test.classroom_name }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Start Date: {{ test.start_date }}</p>
+        <p>Due Date: {{ test.due_date }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" [routerLink]="['/test', test._id]">
+          Show
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+<p *ngIf="!tests && !isLoading">No tests For Now 😆</p>

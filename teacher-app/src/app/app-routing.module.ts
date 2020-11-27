@@ -13,6 +13,9 @@ import { TeacherClassroomUpdateComponent } from './teacher/teacher-classroom-upd
 import { SubmissionCreateComponent } from './submission/submission-create/submission-create.component';
 import { SubmissionsComponent } from './submission/submissions/submissions.component';
 import { SubmissionShowComponent } from './submission/submission-show/submission-show.component';
+import { TestCreateComponent } from './test/test-create/test-create.component';
+import { TestShowComponent } from './test/test-show/test-show.component';
+import { TestsComponent } from './test/tests/tests.component';
 
 const routes: Routes = [
   { path: '', component: TeacherDashboardComponent, canActivate: [AuthGuard] },
@@ -65,6 +68,26 @@ const routes: Routes = [
   {
     path: 'submissions/:classId',
     component: SubmissionsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'test-create/:classId/:className',
+    component: TestCreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'test-edit/:testId',
+    component: TestCreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'test/:testId',
+    component: TestShowComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'tests/:classId',
+    component: TestsComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: Page404notfoundComponent },

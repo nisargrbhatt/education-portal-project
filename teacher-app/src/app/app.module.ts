@@ -23,6 +23,9 @@ import { HeaderComponent } from './header/header.component';
 import { SubmissionsComponent } from './submission/submissions/submissions.component';
 import { SubmissionCreateComponent } from './submission/submission-create/submission-create.component';
 import { SubmissionShowComponent } from './submission/submission-show/submission-show.component';
+import { TestsComponent } from './test/tests/tests.component';
+import { TestShowComponent } from './test/test-show/test-show.component';
+import { TestCreateComponent } from './test/test-create/test-create.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,9 @@ import { SubmissionShowComponent } from './submission/submission-show/submission
     SubmissionsComponent,
     SubmissionCreateComponent,
     SubmissionShowComponent,
+    TestsComponent,
+    TestShowComponent,
+    TestCreateComponent,
   ],
   imports: [
     BrowserModule,

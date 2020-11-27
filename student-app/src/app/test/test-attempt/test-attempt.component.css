@@ -2,6 +2,6 @@ mat-spinner {
   margin: auto;
 }
 mat-card {
-  padding-left: 15%;
-  padding-right: 15%;
+  margin-left: 15%;
+  margin-right: 15%;
 }

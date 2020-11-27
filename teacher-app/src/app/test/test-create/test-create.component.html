@@ -1,0 +1,145 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="saveTest()" *ngIf="!isLoading">
+    <mat-form-field>
+      <mat-label> Submission Name: </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="test_name"
+        placeholder="Test Name"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> Start Date: </mat-label>
+      <input matInput type="date" formControlName="start_date" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> End Date: </mat-label>
+      <input matInput type="date" formControlName="due_date" />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="checkInvalid()"
+    >
+      Submit
+    </button>
+  </form>
+  <div *ngIf="questions.length">
+    <table border="1">
+      <tr>
+        <th>Question</th>
+        <th>Options</th>
+        <th>Answer</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let question of questions; let index">
+        <td>{{ question.question }}</td>
+        <td>
+          {{ question.options[0] }} <br />
+          {{ question.options[1] }} <br />
+          {{ question.options[2] }} <br />
+          {{ question.options[3] }}
+        </td>
+        <td>
+          {{ question.answer }}
+        </td>
+        <td>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="removeQuestion(index)"
+          >
+            Remove
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <form #questionForm="ngForm">
+      <mat-form-field>
+        <mat-label>Enter Your Question:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Question?"
+          required
+          name="question"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Option 1:</mat-label>
+        <input
+          matInput
+          [ngModel]
+          type="text"
+          placeholder="Option 1"
+          name="op1"
+          #op1
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Option 2:</mat-label>
+        <input
+          matInput
+          type="text"
+          [ngModel]
+          placeholder="Option 1"
+          name="op2"
+          #op2
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Option 3:</mat-label>
+        <input
+          matInput
+          type="text"
+          [ngModel]
+          placeholder="Option 1"
+          name="op3"
+          #op3
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Option 4:</mat-label>
+        <input
+          matInput
+          type="text"
+          [ngModel]
+          placeholder="Option 1"
+          name="op4"
+          #op4
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-radio-group
+          aria-label="Select an option"
+          [ngModel]
+          name="answer"
+          required
+          #answer
+        >
+          <mat-radio-button value="0"
+            ><b>{{ op1.value }}</b></mat-radio-button
+          >
+          <mat-radio-button value="1"
+            ><b>{{ op2.value }}</b></mat-radio-button
+          >
+          <mat-radio-button value="2"
+            ><b>{{ op3.value }}</b></mat-radio-button
+          >
+          <mat-radio-button value="3"
+            ><b>{{ op4.value }}</b></mat-radio-button
+          >
+        </mat-radio-group>
+      </mat-form-field>
+      <button [disabled]="questionForm.invalid">Add Question</button>
+    </form>
+  </div>
+</mat-card>

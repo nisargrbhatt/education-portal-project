@@ -10,6 +10,8 @@ import { ProfileSetupComponent } from './auth/profile/profile-setup/profile-setu
 import { ProfileShowComponent } from './auth/profile/profile-show/profile-show.component';
 import { SubmissionsComponent } from './submission/submissions/submissions.component';
 import { SubmissionUploadComponent } from './submission/submission-upload/submission-upload.component';
+import { TestsComponent } from './test/tests/tests.component';
+import { TestAttemptComponent } from './test/test-attempt/test-attempt.component';
 
 const routes: Routes = [
   { path: '', component: StudentDashboardComponent, canActivate: [AuthGuard] },
@@ -42,6 +44,16 @@ const routes: Routes = [
   {
     path: 'submission/:subId',
     component: SubmissionUploadComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'tests',
+    component: TestsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'test/:testId',
+    component: TestAttemptComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: Page404notfoundComponent },

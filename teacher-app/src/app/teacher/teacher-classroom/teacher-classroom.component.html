@@ -26,6 +26,20 @@
     >
       Show Submissions
     </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/test-create', classroom._id, classroom.subject_name]"
+    >
+      Add Test
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/tests', classroom._id]"
+    >
+      Show Tests
+    </button>
   </mat-card>
   <mat-card>
     <mat-list-item>
