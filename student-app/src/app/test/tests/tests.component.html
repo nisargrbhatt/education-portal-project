@@ -18,8 +18,8 @@
               }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-              <p>Start Date: {{ subtest.start_date }}</p>
-              <p>Due Date: {{ subtest.due_date }}</p>
+              <p>Start Date: {{ subtest.start_date | date }}</p>
+              <p>Due Date: {{ subtest.due_date | date }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button
@@ -53,8 +53,8 @@
               }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-              <p>Start Date: {{ subtest.start_date }}</p>
-              <p>Due Date: {{ subtest.due_date }}</p>
+              <p>Start Date: {{ subtest.start_date | date }}</p>
+              <p>Due Date: {{ subtest.due_date | date }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button

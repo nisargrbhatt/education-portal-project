@@ -1,4 +1,147 @@
-<app-header></app-header>
+<!-- <app-header></app-header>
 <main>
   <router-outlet></router-outlet>
-</main>
+</main> -->
+<div style="height: 100vh">
+  <mat-toolbar class="app-toolbar" color="primary">
+    <mat-toolbar-row>
+      <button
+        mat-icon-button
+        (click)="sidenav.toggle()"
+        fxShow="true"
+        fxHide.gt-sm
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span><a routerLink="/">Educational Portal</a></span>
+      <span class="example-spacer"></span>
+      <div fxShow="true" fxHide.lt-md="true">
+        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+        <a
+          *ngIf="!isAuthenticated && !isLoading"
+          mat-button
+          routerLink="/login"
+          routerLinkActive="mat-accent"
+          ><mat-icon>login</mat-icon> Login</a
+        >
+        <a
+          *ngIf="isAuthenticated && !isLoading"
+          mat-button
+          routerLink="/studentsubjects"
+          routerLinkActive="mat-accent"
+          ><mat-icon>subject</mat-icon> Subjects</a
+        >
+        <a
+          *ngIf="isAuthenticated && !isLoading"
+          mat-button
+          routerLink="/submissions"
+          routerLinkActive="mat-accent"
+          ><mat-icon>assignment </mat-icon> Submissions</a
+        >
+        <a
+          *ngIf="isAuthenticated && !isLoading"
+          mat-button
+          routerLink="/tests"
+          routerLinkActive="mat-accent"
+          ><mat-icon>fact_check</mat-icon> Tests</a
+        >
+      </div>
+      <button
+        *ngIf="isAuthenticated && !isLoading"
+        mat-button
+        [matMenuTriggerFor]="notifi"
+        matTooltip="Notifications from the Classrooms"
+        title="Notifications"
+      >
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <mat-menu #notifi="matMenu">
+        <!-- <div class="notification-show" *ngIf="isAuthenticated && !isLoading">
+          <mat-accordion multi="true" *ngIf="notifications">
+            <mat-expansion-panel *ngFor="let mainNoti of notifications">
+              <mat-expansion-panel-header>
+                {{ mainNoti.subName }}
+              </mat-expansion-panel-header>
+              <mat-card *ngFor="let subNoti of mainNoti.notifi">
+                <mat-card-title>{{ subNoti.content }}</mat-card-title>
+                <mat-card-subtitle>{{ subNoti.date }}</mat-card-subtitle>
+              </mat-card>
+            </mat-expansion-panel>
+          </mat-accordion> -->
+        <ul class="list-group" *ngFor="let mainNoti of notifications">
+          <li class="list-group-item">
+            <h2>{{ mainNoti.subName }}<br /></h2>
+            <ul class="list-group" *ngFor="let subNoti of mainNoti.notifi">
+              <li class="list-group-item">
+                <div class="notification-list">
+                  <h3>Notification: {{ subNoti.content }}<br /></h3>
+                  <p>Date: {{ subNoti.date | date }}<br /></p>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <p class="info-text" *ngIf="!notifications && !isLoading">
+          No Notification
+        </p>
+        <!-- </div> -->
+      </mat-menu>
+      <button
+        mat-button
+        [matMenuTriggerFor]="menu"
+        *ngIf="isAuthenticated && !isLoading"
+      >
+        <mat-icon>account_box</mat-icon> {{ userData.name }}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>perm_identity</mat-icon>Profile
+        </button>
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>exit_to_app</mat-icon>Log Out
+        </button>
+      </mat-menu>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav>
+      <mat-nav-list>
+        <a
+          *ngIf="!isAuthenticated && !isLoading"
+          routerLink="/login"
+          routerLinkActive="mat-accent"
+          mat-list-item
+          ><mat-icon>login</mat-icon> Login</a
+        >
+        <a
+          *ngIf="isAuthenticated && !isLoading"
+          routerLink="/studentsubjects"
+          routerLinkActive="mat-accent"
+          mat-list-item
+          ><mat-icon>subject</mat-icon> Subjects</a
+        >
+        <a
+          *ngIf="isAuthenticated && !isLoading"
+          routerLink="/submissions"
+          routerLinkActive="mat-accent"
+          mat-list-item
+          ><mat-icon>assignment </mat-icon> Submissions</a
+        >
+        <a
+          *ngIf="isAuthenticated && !isLoading"
+          routerLink="/tests"
+          routerLinkActive="mat-accent"
+          mat-list-item
+          ><mat-icon>fact_check</mat-icon> Tests</a
+        >
+        <a (click)="sidenav.toggle()" mat-list-item>
+          <mat-icon>close</mat-icon> Close
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill
+      ><router-outlet></router-outlet
+    ></mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

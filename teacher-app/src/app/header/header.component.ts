@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.isLoading = false;
+    // this.isLoading = false;
   }
   checks() {
     if (this.router.url == '/profile/create') {
@@ -64,7 +64,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         console.log(response.message);
         this.userDataAll = response.userDetails;
         this.getNotifications();
-        this.isLoading = false;
+        // this.isLoading = false;
       },
       (error) => {
         console.log(error);
@@ -94,8 +94,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         );
       });
-      this.isLoading = false;
     }
+    this.isLoading = false;
   }
   onLogout() {
     this.authService.logout();
