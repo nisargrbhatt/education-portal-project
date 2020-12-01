@@ -2,7 +2,7 @@
 <main>
   <router-outlet></router-outlet>
 </main> -->
-<div style="height: 100vh">
+<div style="height: 100vh" *ngIf="isAuthenticated">
   <mat-toolbar class="app-toolbar" color="primary">
     <mat-toolbar-row>
       <button
@@ -91,7 +91,7 @@
         [matMenuTriggerFor]="menu"
         *ngIf="isAuthenticated && !isLoading"
       >
-        <mat-icon>account_box</mat-icon> {{ userData.name }}
+        <mat-icon>account_box</mat-icon> {{ userDataAll.name }}
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="/profile">
@@ -145,3 +145,4 @@
     ></mat-sidenav-content>
   </mat-sidenav-container>
 </div>
+<router-outlet *ngIf="!isAuthenticated"></router-outlet>

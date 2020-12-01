@@ -1,4 +1,4 @@
-<mat-card>
+<!-- <mat-card>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form [formGroup]="form" (submit)="onSaveData()" *ngIf="!isLoading">
     <mat-form-field>
@@ -28,4 +28,88 @@
       Login
     </button>
   </form>
-</mat-card>
+</mat-card> -->
+
+<!-- Navbar-->
+<header class="header">
+  <nav class="navbar navbar-expand-lg navbar-light py-3">
+    <div class="container">
+      <a href="#" class="navbar-brand">
+        <img src="assets/images/company.svg" alt="logo" width="150" />
+      </a>
+    </div>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="row py-5 mt-4 align-items-center">
+    <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+      <img
+        src="https://res.cloudinary.com/mhmd/image/upload/v1569543678/form_d9sh6m.svg"
+        alt=""
+        class="img-fluid mb-3 d-none d-md-block"
+      />
+      <h1>Login to your System</h1>
+      <p class="font-italic text-muted mb-0">Teacher Portal</p>
+      <p class="font-italic text-muted">
+        Assoiciated with
+        <a href="" class="text-muted"> <u>Collage Name</u></a>
+      </p>
+    </div>
+
+    <!-- Registeration Form -->
+    <div class="col-md-7 col-lg-6 ml-auto">
+      <form [formGroup]="form" (submit)="onSaveData()" *ngIf="!isLoading">
+        <div class="row">
+          <!-- Email Address -->
+          <div class="input-group col-lg-12 mb-4">
+            <div class="input-group-prepend">
+              <span
+                class="input-group-text bg-white px-4 border-md border-right-0"
+              >
+                <mat-icon>email</mat-icon>
+              </span>
+            </div>
+            <input
+              type="email"
+              placeholder="Enter Your Email"
+              formControlName="email"
+              class="form-control bg-white border-left-0 border-md"
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="input-group col-lg-12 mb-4">
+            <div class="input-group-prepend">
+              <span
+                class="input-group-text bg-white px-4 border-md border-right-0"
+              >
+                <mat-icon>password</mat-icon>
+              </span>
+            </div>
+            <input
+              type="password"
+              placeholder="Enter Your Password"
+              formControlName="password"
+              class="form-control bg-white border-left-0 border-md"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-group col-lg-12 mx-auto mb-0">
+            <span class="font-weight-bold">
+              <button
+                class="btn btn-primary btn-block py-2"
+                type="submit"
+                [disabled]="form.invalid"
+              >
+                Login
+              </button>
+            </span>
+          </div>
+          <!-- Divider Text -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

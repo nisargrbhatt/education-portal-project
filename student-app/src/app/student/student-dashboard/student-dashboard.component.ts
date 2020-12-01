@@ -17,7 +17,7 @@ export class StudentDashboardComponent implements OnInit, OnDestroy {
   private isAuthenticated = false;
   isLoading = false;
   private userDataAll: AuthModel;
-  lectures: [any];
+  lectures: Array<any> = [];
 
   constructor(
     private studentService: StudentService,
@@ -68,6 +68,8 @@ export class StudentDashboardComponent implements OnInit, OnDestroy {
         this.studentService.getLecture(subject).subscribe(
           (response) => {
             console.log(response.message);
+            console.log(response.lecture);
+
             if (response.lecture.timing) {
               this.lectures.push(response.lecture);
             }

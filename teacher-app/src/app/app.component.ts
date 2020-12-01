@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.isLoading = false;
+    // this.isLoading = false;
   }
   checks() {
     if (this.router.url == '/profile/create') {
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log(response.message);
         this.userDataAll = response.userDetails;
         this.getNotifications();
-        this.isLoading = false;
+        // this.isLoading = false;
       },
       (error) => {
         console.log(error);
