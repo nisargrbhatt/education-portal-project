@@ -43,3 +43,6 @@ select.form-control {
 .form-control:focus {
   box-shadow: none;
 }
+.example-spacer {
+  flex: 1 1 auto;
+}
