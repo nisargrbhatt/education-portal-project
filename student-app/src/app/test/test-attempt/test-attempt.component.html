@@ -1,27 +1,29 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div *ngIf="!isLoading">
-  <mat-card *ngIf="!isLoading && !checkAttempt()">
+  <mat-card *ngIf="!isLoading && !checkAttempt()" class="test-card">
     <form #questionForm="ngForm" (ngSubmit)="attemptTest(questionForm)">
-      <div *ngFor="let question of testQuestion; let i = index">
-        <mat-card>
-          <h3>
-            <b>Question {{ i }}: {{ question.question }}</b>
-          </h3>
-          <mat-radio-group
-            aria-label="Select an option"
-            [ngModel]
-            [name]="'q' + i"
-            required
-          >
-            <div *ngFor="let op of question.options">
-              <mat-radio-button required value="{{ op }}"
-                ><b>{{ op }}</b></mat-radio-button
-              >
-              <br />
-              <br />
-            </div>
-          </mat-radio-group>
-        </mat-card>
+      <div
+        *ngFor="let question of testQuestion; let i = index"
+        class="question-div"
+      >
+        <h3>
+          <b>Question {{ i + 1 }}: {{ question.question }}</b>
+        </h3>
+        <mat-radio-group
+          aria-label="Select an option"
+          [ngModel]
+          [name]="'q' + i"
+          required
+        >
+          <div *ngFor="let op of question.options">
+            <mat-radio-button required value="{{ op }}"
+              ><b>{{ op }}</b></mat-radio-button
+            >
+            <br />
+            <br />
+          </div>
+        </mat-radio-group>
+        <mat-divider></mat-divider>
       </div>
       <button
         mat-raised-button

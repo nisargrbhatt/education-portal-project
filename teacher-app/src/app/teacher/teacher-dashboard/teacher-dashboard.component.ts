@@ -25,8 +25,8 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
     this.isLoading = true;
+    this.userId = this.authService.getUserId();
     if (this.isAuthenticated) {
       this.getClassroom();
     }
@@ -41,7 +41,7 @@ export class TeacherDashboardComponent implements OnInit, OnDestroy {
           this.getClassroom();
         }
       });
-    this.isLoading = false;
+    // this.isLoading = false;
   }
   getClassroom() {
     this.isLoading = true;

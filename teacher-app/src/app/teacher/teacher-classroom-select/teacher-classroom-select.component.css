@@ -1,13 +1,25 @@
-mat-card {
-  padding: 5%;
-  margin: 5%;
-}
 mat-spinner {
   margin: auto;
 }
+
 .example-card {
-  max-width: 400px;
+  margin-top: 15px;
+  width: 100%;
+  align-items: center;
 }
+.example-card button {
+  margin-left: 37.5%;
+}
+
 mat-form-field {
   width: 100%;
+}
+
+.form-card {
+  padding: 5%;
+  margin: 5%;
+}
+.info-text {
+  text-align: center;
+  font-weight: 450;
 }

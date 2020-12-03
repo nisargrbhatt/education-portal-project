@@ -1,7 +1,11 @@
 mat-spinner {
   margin: auto;
 }
-mat-card {
+.test-card {
   margin-left: 15%;
   margin-right: 15%;
+}
+.question-div {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

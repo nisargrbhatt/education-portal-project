@@ -18,6 +18,7 @@ export class TestsComponent implements OnInit, OnDestroy {
   isLoading = false;
   private userDataAll: AuthModel;
   tests: Array<TestModel[]> = [];
+  tests1: Array<TestModel[]> = [];
 
   constructor(
     private authService: AuthService,
@@ -43,7 +44,7 @@ export class TestsComponent implements OnInit, OnDestroy {
           this.getProfile();
         }
       });
-    this.isLoading = false;
+    // this.isLoading = false;
   }
   getProfile() {
     this.isLoading = true;
@@ -61,22 +62,53 @@ export class TestsComponent implements OnInit, OnDestroy {
   }
   getTests() {
     this.isLoading = true;
-    this.userDataAll.subjects.forEach((data) => {
-      this.testService.getTestClassid(data).subscribe(
-        (response) => {
-          console.log(response.message);
-          if (response.test.length) {
-            console.log(response.test);
-            this.tests.push(response.test);
+    if (this.userDataAll.subjects) {
+      this.userDataAll.subjects.forEach((data) => {
+        this.testService.getTestClassid(data).subscribe(
+          (response) => {
+            console.log(response.message);
+            if (response.test.length) {
+              // console.log(response.test);
+              let testData = response.test;
+              let validTest = testData.map((data) => {
+                if (this.validShow(data.due_date)) {
+                  return data;
+                } else {
+                  return null;
+                }
+              });
+              let validTest1 = validTest.filter((data) => {
+                return data != null;
+              });
+              let invalidTest = testData.map((data) => {
+                if (!this.validShow(data.due_date)) {
+                  return data;
+                } else {
+                  return null;
+                }
+              });
+              let invalidTest1 = invalidTest.filter((data) => {
+                return data != null;
+              });
+              // console.log(validTest1);
+              // console.log(invalidTest1);
+              if (validTest1) {
+                // console.log('true');
+                this.tests.push(validTest1);
+              }
+              if (invalidTest1) {
+                this.tests1.push(invalidTest1);
+              }
+            }
+          },
+          (error) => {
+            console.log(error);
+            this.isLoading = false;
           }
-        },
-        (error) => {
-          console.log(error);
-          this.isLoading = false;
-        }
-      );
-    });
-    this.isLoading = false;
+        );
+      });
+      this.isLoading = false;
+    }
   }
   validShow(due_date: Date) {
     const now = new Date();

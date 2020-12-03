@@ -1,5 +1,5 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-grid-list
+<!-- <mat-grid-list
   class="example-card"
   cols="2"
   rowHeight="1:2"
@@ -30,5 +30,32 @@
       </mat-card>
     </div>
   </mat-grid-tile>
-</mat-grid-list>
+</mat-grid-list> -->
 <p *ngIf="!submissions && !isLoading">No Submissions For Now 😆</p>
+<div class="container-fluid" *ngIf="submissions && !isLoading">
+  <div class="row" *ngFor="let submission of submissions">
+    <div class="col-sm-4" *ngFor="let subsubmission of submission">
+      <mat-card *ngIf="validShow(subsubmission.due_date)" class="example-card">
+        <mat-card-header>
+          <mat-card-title>{{ subsubmission.submission_name }}</mat-card-title>
+          <mat-card-subtitle>{{
+            subsubmission.classroom_name
+          }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Start Date: {{ subsubmission.start_date | date }}</p>
+          <p>Due Date: {{ subsubmission.due_date | date }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/submission', subsubmission._id]"
+          >
+            Submit
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -2,15 +2,10 @@
 
 <mat-tab-group *ngIf="!isLoading">
   <mat-tab label="Current">
-    <mat-grid-list
-      class="example-card"
-      cols="2"
-      rowHeight="1:2"
-      *ngIf="tests.length && !isLoading"
-    >
-      <mat-grid-tile *ngFor="let test of tests">
-        <div *ngFor="let subtest of test">
-          <mat-card *ngIf="validShow(subtest.due_date)">
+    <div class="container-fluid" *ngIf="tests.length && !isLoading">
+      <div class="row" *ngFor="let test of tests">
+        <div class="col-sm-4" *ngFor="let subtest of test">
+          <mat-card class="example-card">
             <mat-card-header>
               <mat-card-title>{{ subtest.test_name }}</mat-card-title>
               <mat-card-subtitle>{{
@@ -23,7 +18,7 @@
             </mat-card-content>
             <mat-card-actions>
               <button
-                mat-button
+                mat-raised-button
                 color="primary"
                 [routerLink]="['/test', subtest._id]"
               >
@@ -32,20 +27,17 @@
             </mat-card-actions>
           </mat-card>
         </div>
-      </mat-grid-tile>
-    </mat-grid-list>
-    <p *ngIf="!tests.length && !isLoading">No Ongoing Test For Now 😆</p>
+      </div>
+    </div>
+    <p *ngIf="!tests.length && !isLoading" class="info-text">
+      No Ongoing Test For Now 😆
+    </p>
   </mat-tab>
-  <mat-tab label="Past"
-    ><mat-grid-list
-      class="example-card"
-      cols="2"
-      rowHeight="1:2"
-      *ngIf="tests.length && !isLoading"
-    >
-      <mat-grid-tile *ngFor="let test of tests">
-        <div *ngFor="let subtest of test">
-          <mat-card *ngIf="!validShow(subtest.due_date)">
+  <mat-tab label="Past">
+    <div class="container-fluid" *ngIf="tests1.length && !isLoading">
+      <div class="row" *ngFor="let test of tests1">
+        <div class="col-sm-4" *ngFor="let subtest of test">
+          <mat-card class="example-card">
             <mat-card-header>
               <mat-card-title>{{ subtest.test_name }}</mat-card-title>
               <mat-card-subtitle>{{
@@ -58,7 +50,7 @@
             </mat-card-content>
             <mat-card-actions>
               <button
-                mat-button
+                mat-raised-button
                 color="primary"
                 [routerLink]="['/test', subtest._id]"
               >
@@ -67,8 +59,10 @@
             </mat-card-actions>
           </mat-card>
         </div>
-      </mat-grid-tile>
-    </mat-grid-list>
-    <p *ngIf="!tests.length && !isLoading">No Past Test For Now 😆</p>
+      </div>
+    </div>
+    <p *ngIf="!tests1.length && !isLoading" class="info-text">
+      No Past Test For Now 😆
+    </p>
   </mat-tab>
 </mat-tab-group>
