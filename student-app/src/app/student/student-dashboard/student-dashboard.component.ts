@@ -30,10 +30,6 @@ export class StudentDashboardComponent implements OnInit, OnDestroy {
     this.isAuthenticated = this.authService.getIsAuth();
 
     this.isLoading = true;
-    if (this.isAuthenticated) {
-      this.getProfile();
-    }
-
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe((authStatus) => {
@@ -45,6 +41,9 @@ export class StudentDashboardComponent implements OnInit, OnDestroy {
           this.getProfile();
         }
       });
+    if (this.isAuthenticated) {
+      this.getProfile();
+    }
   }
   getProfile() {
     this.isLoading = true;
@@ -81,6 +80,6 @@ export class StudentDashboardComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() {
-    this.authStatusSub.unsubscribe();
+    // this.authStatusSub.unsubscribe();
   }
 }

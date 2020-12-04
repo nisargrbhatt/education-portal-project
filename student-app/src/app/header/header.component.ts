@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userId: string;
   userDataAll: AuthModel;
   userData: any;
-  notifications: [any];
+  notifications: Array<any> = [];
 
   constructor(
     private studentService: StudentService,

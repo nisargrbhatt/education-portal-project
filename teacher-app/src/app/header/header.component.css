@@ -1,24 +1,3 @@
-a {
-  text-decoration: none;
-  color: white;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-
-.spacer {
-  flex: 1 1 auto;
-}
-
-:host {
-  display: block;
-  /* margin-top: 1rem; */
-}
-
 .info-text {
   text-align: center;
 }
@@ -28,4 +7,43 @@ mat-card {
 .notification_css {
   width: 150px;
   padding: 5px;
+}
+.example-icon {
+  padding: 0 7px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.app-toolbar {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+.notification-show {
+  width: 100%;
+  height: 350px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  opacity: 0;
+}
+.notification-show mat-list-item {
+  margin-top: 50px;
+  padding: 10px;
+  width: 100%;
+  /* overflow: scroll; */
+}
+.notification-show mat-list-item mat-card {
+  width: 100%;
+}
+.notification-list {
+  width: 100%;
 }

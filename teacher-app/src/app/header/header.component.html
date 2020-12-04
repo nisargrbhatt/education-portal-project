@@ -1,66 +1,100 @@
-<mat-toolbar color="primary" *ngIf="!isLoading && checks()">
-  <span>
-    <a routerLink="/">Educational Portal [Collage Name]></a>
-  </span>
-  <span class="spacer"></span>
-  <ul>
-    <li *ngIf="!isAuthenticated && !isLoading">
-      <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
-    </li>
-    <li *ngIf="isAuthenticated && !isLoading">
-      <a mat-button routerLink="/classroom-select" routerLinkActive="mat-accent"
-        >Classroom Select</a
-      >
-    </li>
-    <li *ngIf="isAuthenticated && !isLoading">
-      <button
-        mat-button
-        [matMenuTriggerFor]="notifi"
-        matTooltip="Notifications from the Classrooms"
-        title="Notifications"
-      >
-        <mat-icon>all_inbox</mat-icon>
-      </button>
-      <mat-menu #notifi="matMenu" class="notification_css">
-        <mat-accordion multi="true" *ngIf="notifications">
-          <mat-expansion-panel *ngFor="let mainNoti of notifications">
-            <mat-expansion-panel-header>
-              {{ mainNoti.subName }}
-            </mat-expansion-panel-header>
-            <mat-card *ngFor="let subNoti of mainNoti.notifi">
-              <mat-card-title>{{ subNoti.content }}</mat-card-title>
-              <mat-card-subtitle>{{ subNoti.date }}</mat-card-subtitle>
-              <mat-card-actions *ngIf="mainNoti.faculty === userId">
-                <button
-                  mat-button
-                  color="warn"
-                  matTooltip="Delete the Notification"
-                  (click)="
-                    onDelete(mainNoti.classId, subNoti.date, subNoti.content)
-                  "
-                >
-                  DELETE
-                </button>
-              </mat-card-actions>
-            </mat-card>
-          </mat-expansion-panel>
-        </mat-accordion>
-        <p class="info-text" *ngIf="notifications.length == 0 && !isLoading">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light">
+  <a class="navbar-brand" mat-button routerLink="/">Educational Portal</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <span class="example-spacer"></span>
+    <ul class="navbar-nav mr-auto">
+      <li>
+        <a
+          *ngIf="!isAuthenticated && !isLoading"
+          class="nav-link"
+          mat-button
+          routerLink="/login"
+          routerLinkActive="mat-accent"
+          ><mat-icon>login</mat-icon> Login</a
+        >
+      </li>
+      <li>
+        <a
+          *ngIf="isAuthenticated && !isLoading"
+          class="nav-link"
+          mat-button
+          routerLink="/classroom-select"
+          routerLinkActive="mat-accent"
+          ><mat-icon>class</mat-icon> Classroom Select</a
+        >
+      </li>
+      <li>
+        <a
+          *ngIf="isAuthenticated && !isLoading"
+          mat-button
+          class="nav-link"
+          [matMenuTriggerFor]="notifi"
+          matTooltip="Notifications from the Classrooms"
+          title="Notifications"
+        >
+          <mat-icon>notifications</mat-icon> Notifications
+        </a>
+      </li>
+      <mat-menu #notifi="matMenu">
+        <ul class="list-group" *ngFor="let mainNoti of notifications">
+          <li class="list-group-item">
+            <h2>{{ mainNoti.subName }}<br /></h2>
+            <ul class="list-group" *ngFor="let subNoti of mainNoti.notifi">
+              <li class="list-group-item">
+                <div class="notification-list">
+                  <h3>Notification: {{ subNoti.content }}<br /></h3>
+                  <p>Date: {{ subNoti.date | date }}<br /></p>
+                  <button
+                    *ngIf="mainNoti.faculty === userId"
+                    mat-raised-button
+                    color="warn"
+                    matTooltip="Delete the Notification"
+                    (click)="
+                      onDelete(mainNoti.classId, subNoti.date, subNoti.content)
+                    "
+                  >
+                    DELETE
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <p class="info-text" *ngIf="!notifications && !isLoading">
           No Notification
         </p>
       </mat-menu>
-    </li>
-    <li *ngIf="isAuthenticated && !isLoading">
-      <button mat-button [matMenuTriggerFor]="menu">
-        {{ userData.name }}
-      </button>
+      <li>
+        <a
+          mat-button
+          class="nav-link"
+          [matMenuTriggerFor]="menu"
+          *ngIf="isAuthenticated && !isLoading"
+        >
+          <mat-icon>account_box</mat-icon> {{ userDataAll.name }}
+        </a>
+      </li>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="/profile">Profile</button>
-        <button mat-menu-item (click)="onLogout()">Log Out</button>
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>perm_identity</mat-icon>Profile
+        </button>
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>exit_to_app</mat-icon>Log Out
+        </button>
       </mat-menu>
-    </li>
-    <!-- <li *ngIf="isAuthenticated && !isLoading">
-      <a mat-button (click)="onLogout()">Logout</a>
-    </li> -->
-  </ul>
-</mat-toolbar>
+    </ul>
+  </div>
+</nav>

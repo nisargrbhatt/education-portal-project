@@ -2,9 +2,44 @@ table {
   width: 100%;
 }
 mat-card {
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 mat-spinner {
   margin: auto;
+}
+.list-item {
+  padding: 1%;
+  margin: 1%;
+  background-color: white;
+  font-weight: 450;
+}
+.tab-space {
+  display: inline-block;
+  margin-left: 40px;
+}
+input[type="text"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+input[type="date"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+input[type="time"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+.list-item-nform {
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.list-item-nform button {
+  margin-left: 47%;
 }

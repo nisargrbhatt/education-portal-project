@@ -1,8 +1,8 @@
-<!-- <app-header></app-header>
+<app-header></app-header>
 <main>
   <router-outlet></router-outlet>
-</main> -->
-<div style="height: 100vh" *ngIf="isAuthenticated">
+</main>
+<!-- <div style="height: 100vh" *ngIf="isAuthenticated">
   <mat-toolbar class="app-toolbar" color="primary">
     <mat-toolbar-row>
       <button
@@ -16,7 +16,7 @@
       <span><a routerLink="/">Educational Portal</a></span>
       <span class="example-spacer"></span>
       <div fxShow="true" fxHide.lt-md="true">
-        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+
         <a
           *ngIf="!isAuthenticated && !isLoading"
           mat-button
@@ -56,18 +56,6 @@
         <mat-icon>notifications</mat-icon>
       </button>
       <mat-menu #notifi="matMenu">
-        <!-- <div class="notification-show" *ngIf="isAuthenticated && !isLoading">
-          <mat-accordion multi="true" *ngIf="notifications">
-            <mat-expansion-panel *ngFor="let mainNoti of notifications">
-              <mat-expansion-panel-header>
-                {{ mainNoti.subName }}
-              </mat-expansion-panel-header>
-              <mat-card *ngFor="let subNoti of mainNoti.notifi">
-                <mat-card-title>{{ subNoti.content }}</mat-card-title>
-                <mat-card-subtitle>{{ subNoti.date }}</mat-card-subtitle>
-              </mat-card>
-            </mat-expansion-panel>
-          </mat-accordion> -->
         <ul class="list-group" *ngFor="let mainNoti of notifications">
           <li class="list-group-item">
             <h2>{{ mainNoti.subName }}<br /></h2>
@@ -84,7 +72,7 @@
         <p class="info-text" *ngIf="!notifications && !isLoading">
           No Notification
         </p>
-        <!-- </div> -->
+
       </mat-menu>
       <button
         mat-button
@@ -145,4 +133,4 @@
     ></mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-<router-outlet *ngIf="!isAuthenticated"></router-outlet>
+<router-outlet *ngIf="!isAuthenticated"></router-outlet> -->

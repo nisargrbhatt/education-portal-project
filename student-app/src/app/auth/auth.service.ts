@@ -137,7 +137,7 @@ export class AuthService {
       this.userData = authInformation.userData;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
-      this.router.navigate(['/']);
+      // this.router.navigate(['/']);
     }
   }
   logout() {
