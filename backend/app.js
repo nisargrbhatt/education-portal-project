@@ -8,6 +8,7 @@ const userRoutes = require("./routes/user");
 const classroomRoutes = require("./routes/classroom");
 const submissionRoutes = require("./routes/submission");
 const testRoutes = require("./routes/test");
+const adminRoutes = require("./routes/admin");
 
 const app = express();
 
@@ -26,6 +27,9 @@ mongoose
 
 // Logger
 app.use(morgan("dev"));
+
+//Admin
+app.use("/admin", adminRoutes);
 
 // Body Parser
 app.use(bodyParser.json());
