@@ -9,8 +9,8 @@ mat-spinner {
   margin: auto;
 }
 .list-item {
-  padding: 1%;
   margin: 1%;
+  padding: 1%;
   background-color: white;
   font-weight: 450;
 }
@@ -18,7 +18,7 @@ mat-spinner {
   display: inline-block;
   margin-left: 40px;
 }
-input[type="text"] {
+/* input[type="text"] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -35,11 +35,21 @@ input[type="time"] {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
-}
+} */
 .list-item-nform {
-  padding-left: 2%;
-  padding-right: 2%;
+  margin-left: 3%;
+  padding-left: 10%;
 }
 .list-item-nform button {
-  margin-left: 47%;
+  margin-left: 10%;
+}
+
+.list-main {
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+  border: 1px solid;
+}
+.action button {
+  margin: 0% 2% 0% 2%;
 }

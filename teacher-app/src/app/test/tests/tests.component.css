@@ -1,7 +1,11 @@
 mat-spinner {
   margin: auto;
 }
-mat-card {
-  padding-left: 15%;
-  padding-right: 15%;
+.example-card {
+  margin-top: 15px;
+  width: 100%;
+  align-items: center;
+}
+.example-card button {
+  margin-left: 37.5%;
 }

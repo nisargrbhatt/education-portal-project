@@ -1,6 +1,8 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-list *ngIf="!isLoading && classroom">
-  <mat-card>
+
+<div class="list-main" *ngIf="!isLoading && classroom">
+  <div class="list-item action">
+    Actions:
     <button
       mat-raised-button
       color="primary"
@@ -40,54 +42,51 @@
     >
       Show Tests
     </button>
-  </mat-card>
-  <div class="list-item">
-    <mat-list-item>
-      <h1>Subject Name: {{ classroom.subject_name }}</h1>
-    </mat-list-item>
   </div>
-  <div class="list-item">
-    <mat-list-item>Subject Code: {{ classroom.subject_code }}</mat-list-item>
-  </div>
-
-  <div class="list-item">
-    <mat-list-item>Department: {{ classroom.department }}</mat-list-item>
-  </div>
-
-  <div class="list-item">
-    <mat-list-item>Semester: {{ classroom.semester }}</mat-list-item>
-  </div>
-
+  <mat-divider></mat-divider>
+  <div class="list-item">Subject Name: {{ classroom.subject_name }}</div>
+  <mat-divider></mat-divider>
+  <div class="list-item">Subject Code: {{ classroom.subject_code }}</div>
+  <mat-divider></mat-divider>
+  <div class="list-item">Department: {{ classroom.department }}</div>
+  <mat-divider></mat-divider>
+  <div class="list-item">Semester: {{ classroom.semester }}</div>
+  <mat-divider></mat-divider>
   <div class="list-item" *ngIf="classroom.scheduled_lecture">
-    <mat-list-item
-      >Scheduled Lecture: Date:
-      {{ classroom.scheduled_lecture.date | date }} Time:
-      {{ classroom.scheduled_lecture.time }} &nbsp;
-      <button mat-raised-button color="warn" (click)="unscheduleLecture()">
-        Unschedule
-      </button>
-    </mat-list-item>
+    Scheduled Lecture: Date:
+    {{ classroom.scheduled_lecture.date | date }} Time:
+    {{ classroom.scheduled_lecture.time }} &nbsp;
+    <button mat-raised-button color="warn" (click)="unscheduleLecture()">
+      Unschedule
+    </button>
   </div>
 
   <div class="list-item" *ngIf="!classroom.scheduled_lecture">
-    <mat-list-item>
+    Scheduled Lecture:
+    <div class="list-item-nform">
       <form #lecForm="ngForm">
-        <input
-          matInput
-          type="date"
-          placeholder="Date of Lecture"
-          #dateof
-          required
-        />
-
-        <input
-          matInput
-          type="time"
-          placeholder="Time of Lecture"
-          #timeof
-          required
-        />
-
+        <mat-form-field>
+          <input
+            matInput
+            type="date"
+            name="dateof"
+            ngModel
+            #dateof="ngModel"
+            placeholder="Date of Lecture"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            type="time"
+            name="timeof"
+            placeholder="Time of Lecture"
+            #timeof="ngModel"
+            ngModel
+            required
+          />
+        </mat-form-field>
         <button
           mat-raised-button
           color="primary"
@@ -97,17 +96,38 @@
           Schedule
         </button>
       </form>
-    </mat-list-item>
+    </div>
   </div>
+  <mat-divider></mat-divider>
   <div class="list-item">
-    <mat-list-item> Notification: </mat-list-item>
+    Notification:
 
     <div class="list-item-nform">
       <form #notForm="ngForm">
-        <input matInput type="date" placeholder="Date" #dateof required />
-
-        <input matInput type="text" placeholder="Content" #content required />
-
+        <mat-form-field>
+          <input
+            matInput
+            name="dateof"
+            type="date"
+            ngModel
+            placeholder="Date"
+            #dateof="ngModel"
+            required
+          />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            name="content"
+            ngModel
+            placeholder="Content"
+            #content="ngModel"
+            required
+          />
+        </mat-form-field>
+        <br />
         <button
           mat-raised-button
           color="primary"
@@ -119,8 +139,9 @@
       </form>
     </div>
   </div>
+  <mat-divider></mat-divider>
   <div class="list-item">
-    <mat-list-item> Student Enrolled: </mat-list-item>
+    Student Enrolled:
     <br />
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="name">
@@ -138,4 +159,4 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
-</mat-list>
+</div>

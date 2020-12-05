@@ -90,6 +90,7 @@ export class SubmissionShowComponent implements OnInit, OnDestroy {
     this.submissionService.deleteSubmission(this.subId, classId);
     this.router.navigate(['/']);
   }
+
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
   }

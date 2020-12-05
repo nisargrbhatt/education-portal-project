@@ -1,56 +1,40 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-list *ngIf="!isLoading && submission">
-  <mat-card>
-    <mat-list-item>
-      Submission Name: {{ submission.submission_name }}
-    </mat-list-item>
-  </mat-card>
-  <mat-card>
-    <mat-list-item> Context: {{ submission.context }} </mat-list-item>
-  </mat-card>
-  <mat-card>
-    <mat-list-item> Start Date: {{ submission.start_date }} </mat-list-item>
-  </mat-card>
-  <mat-card>
-    <mat-list-item> Due Date: {{ submission.due_date }} </mat-list-item>
-  </mat-card>
-  <mat-card>
-    <mat-list-item>
-      Subject Name: {{ submission.classroom_name }}
-    </mat-list-item>
-  </mat-card>
-  <mat-card *ngIf="!checkSubmit()">
-    <mat-list-item>
-      <form [formGroup]="form" (submit)="uploadSubmission()">
-        <!-- <mat-form-field>
-          <mat-label> Upload Pdf: </mat-label>
-          <input type="file" formControlName="file" placeholder="Upload File" />
-          <mat-error *ngIf="form.get('file').invalid">
-            Please upload valid PDF.
-          </mat-error>
-        </mat-form-field> -->
-        <div>
-          <button mat-stroked-button type="button" (click)="filePicker.click()">
-            Pick File
-          </button>
-          <input type="file" #filePicker (change)="onFilePicked($event)" />
-        </div>
-        <button mat-raised-button color="primary" type="submit">Upload</button>
-      </form>
-    </mat-list-item>
-  </mat-card>
-  <mat-card *ngIf="checkSubmit()">
-    <mat-list-item>
-      Your Upload:
-      <table id="upload-data" border="1">
+<div class="list-main" *ngIf="!isLoading && submission">
+  <div class="list-item">Submission Name: {{ submission.submission_name }}</div>
+  <mat-divider></mat-divider>
+  <div class="list-item">Context: {{ submission.context }}</div>
+  <mat-divider></mat-divider>
+  <div class="list-item">Start Date: {{ submission.start_date }}</div>
+  <mat-divider></mat-divider>
+  <div class="list-item">Due Date: {{ submission.due_date }}</div>
+  <mat-divider></mat-divider>
+  <div class="list-item">Subject Name: {{ submission.classroom_name }}</div>
+  <mat-divider></mat-divider>
+  <div class="list-item" *ngIf="!checkSubmit()">
+    <form [formGroup]="form" (submit)="uploadSubmission()">
+      <div>
+        <button mat-stroked-button type="button" (click)="filePicker.click()">
+          Pick File
+        </button>
+        <input type="file" #filePicker (change)="onFilePicked($event)" />
+      </div>
+      <button mat-raised-button color="primary" type="submit">Upload</button>
+    </form>
+  </div>
+  <div class="list-item" *ngIf="checkSubmit()">
+    Your Upload:
+    <table class="upload-table" border="1">
+      <thead>
         <tr>
-          <th>Name</th>
-          <th>Enrollment No</th>
-          <th>File</th>
-          <th>Upload Time</th>
-          <th>Action</th>
+          <th scope="col">Name</th>
+          <th scope="col">Enrollment No</th>
+          <th scope="col">File</th>
+          <th scope="col">Upload Time</th>
+          <th scope="col">Action</th>
         </tr>
-        <tr>
+      </thead>
+      <tbody>
+        <tr scope="row">
           <td>{{ ourData.name }}</td>
           <td>{{ ourData.enrollment_no }}</td>
           <td>
@@ -58,7 +42,10 @@
               <a [href]="ourData.file">Show</a>
             </button>
           </td>
-          <td>{{ ourData.upload_time }}</td>
+          <td>
+            {{ ourData.upload_time | date }}
+            {{ ourData.upload_time | slice: 11:16 }}
+          </td>
           <td>
             <button
               mat-raised-button
@@ -69,7 +56,7 @@
             </button>
           </td>
         </tr>
-      </table>
-    </mat-list-item>
-  </mat-card>
-</mat-list>
+      </tbody>
+    </table>
+  </div>
+</div>

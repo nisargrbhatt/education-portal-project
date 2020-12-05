@@ -25,6 +25,8 @@ export class TestAttemptComponent implements OnInit {
   private userDataAll: AuthModel;
   answer: string[] = [];
   index: number;
+  test_name: string;
+  doTest = true;
   myData: any;
   constructor(
     private testService: TestService,
@@ -78,7 +80,14 @@ export class TestAttemptComponent implements OnInit {
             console.log(response.message);
             this.test = response.test;
             this.testQuestion = this.test.test_question;
-            this.isLoading = false;
+            this.test_name = this.test.test_name;
+            if (this.validData(this.test.due_date)) {
+              this.doTest = true;
+              this.isLoading = false;
+            } else {
+              this.doTest = false;
+              this.isLoading = false;
+            }
           },
           (error) => {
             console.log(error);
@@ -121,6 +130,19 @@ export class TestAttemptComponent implements OnInit {
     this._snackBar.open(message, 'Okay', {
       duration: 2000,
     });
+  }
+  validData(date) {
+    let test_date = new Date(date);
+
+    let now = new Date();
+    console.log(test_date);
+    console.log(now);
+
+    if (test_date > now) {
+      return true;
+    } else {
+      return false;
+    }
   }
   attemptTest(form: NgForm) {
     for (let i = 0; i < this.test.test_question.length; i++) {

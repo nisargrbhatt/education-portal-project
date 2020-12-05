@@ -2,10 +2,22 @@ mat-spinner {
   margin: auto;
 }
 .test-card {
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 .question-div {
   padding-top: 5px;
   padding-bottom: 5px;
+}
+.list-main {
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+  border: 1px solid;
+}
+.list-item {
+  margin: 1%;
+  padding: 1%;
+  background-color: white;
+  font-weight: 450;
 }

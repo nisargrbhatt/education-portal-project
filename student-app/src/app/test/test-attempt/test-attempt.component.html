@@ -1,6 +1,6 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div *ngIf="!isLoading">
-  <mat-card *ngIf="!isLoading && !checkAttempt()" class="test-card">
+  <mat-card *ngIf="!isLoading && !checkAttempt() && doTest" class="test-card">
     <form #questionForm="ngForm" (ngSubmit)="attemptTest(questionForm)">
       <div
         *ngFor="let question of testQuestion; let i = index"
@@ -35,20 +35,21 @@
       </button>
     </form>
   </mat-card>
-  <mat-card *ngIf="checkAttempt() && !isLoading">
-    <table id="upload-data" border="1">
-      <tr>
-        <th>Name</th>
-        <th>Enrollment No</th>
-        <th>Marks</th>
-        <th>Submit Time</th>
-      </tr>
-      <tr>
-        <td>{{ myData.name }}</td>
-        <td>{{ myData.enrollment_no }}</td>
-        <td>{{ myData.marks }}</td>
-        <td>{{ myData.submit_time }}</td>
-      </tr>
-    </table>
-  </mat-card>
+  <div class="list-main" *ngIf="checkAttempt() && !isLoading">
+    <div class="list-item">Result of {{ test_name }} :</div>
+    <mat-divider></mat-divider>
+    <div class="list-item">Name: {{ myData.name }}</div>
+    <mat-divider></mat-divider>
+    <div class="list-item">Enrollment No: {{ myData.enrollment_no }}</div>
+    <mat-divider></mat-divider>
+    <div class="list-item">Marks: {{ myData.marks }}</div>
+    <mat-divider></mat-divider>
+    <div class="list-item">
+      Submit Time: {{ myData.submit_time | date }}
+      {{ myData.submit_time | slice: 11:16 }}
+    </div>
+  </div>
+  <div *ngIf="!doTest && !checkAttempt()">
+    <h1>You have missed this Test</h1>
+  </div>
 </div>

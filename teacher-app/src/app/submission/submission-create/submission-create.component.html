@@ -1,5 +1,5 @@
-<mat-card>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="sub-form">
   <form [formGroup]="form" (submit)="onSaveSubmission()" *ngIf="!isLoading">
     <mat-form-field>
       <mat-label> Submission Name: </mat-label>
@@ -36,4 +36,4 @@
       Submit
     </button>
   </form>
-</mat-card>
+</div>
