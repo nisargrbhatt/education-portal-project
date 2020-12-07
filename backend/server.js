@@ -1,7 +1,7 @@
 const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
-const https = require("https;");
+const https = require("https");
 const fs = require("fs");
 
 const normalizePort = (val) => {
@@ -52,7 +52,7 @@ app.set("port", port);
 //   key: fs.readFileSync("key.pem"),
 //   cery: fs.readFileSync("cert.pem"),
 // };
-// const server1 = https.createServer(options, app);
+// const server = https.createServer(options, app);
 const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
