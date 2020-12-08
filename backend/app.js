@@ -60,6 +60,11 @@ app.use((req, res, next) => {
 
 //Tests
 // console.log(process.env.JWT_KEY);
+app.use("/", (req, res, next) => {
+  return res.status(200).json({
+    message: "Hello",
+  });
+});
 
 // Routes
 app.use("/user", userRoutes);

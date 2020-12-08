@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
+const enc = require("../middleware/encrption");
 
 const User = require("../models/user");
 
@@ -510,9 +511,10 @@ exports.passwordChange = (req, res, next) => {
 };
 
 exports.userLogin = (req, res, next) => {
+  let decAuthData = enc.decryptData(req.body.authData);
   let fetchedUser;
   User.findOne({
-    email: req.body.email,
+    email: decAuthData.email,
   })
     .then((user) => {
       if (!user) {
@@ -522,7 +524,7 @@ exports.userLogin = (req, res, next) => {
         });
       }
       fetchedUser = user;
-      return bcrypt.compare(req.body.password, user.password);
+      return bcrypt.compare(decAuthData.password, user.password);
     })
     .then((result) => {
       if (!result) {
