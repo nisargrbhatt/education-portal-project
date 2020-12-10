@@ -8,7 +8,6 @@ const userRoutes = require("./routes/user");
 const classroomRoutes = require("./routes/classroom");
 const submissionRoutes = require("./routes/submission");
 const testRoutes = require("./routes/test");
-const adminRoutes = require("./routes/admin");
 
 const app = express();
 
@@ -25,11 +24,8 @@ mongoose
     console.log("Connection Failed.");
   });
 
-// Logger
-app.use(morgan("dev"));
-
 //Admin
-app.use("/admin", adminRoutes);
+// app.use("/admin", adminRoutes);
 
 // Body Parser
 app.use(bodyParser.json());
@@ -38,7 +34,8 @@ app.use(
     extended: false,
   })
 );
-
+// Logger
+app.use(morgan("dev"));
 //Statics
 
 app.use("/images", express.static(path.join("images")));
@@ -60,11 +57,6 @@ app.use((req, res, next) => {
 
 //Tests
 // console.log(process.env.JWT_KEY);
-app.use("/", (req, res, next) => {
-  return res.status(200).json({
-    message: "Hello",
-  });
-});
 
 // Routes
 app.use("/user", userRoutes);

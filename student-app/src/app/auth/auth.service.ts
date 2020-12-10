@@ -4,7 +4,6 @@ import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { Router } from '@angular/router';
-import { EncryptionService } from './../encryption.service';
 
 const BACKEND_URL = environment.apiUrl + '/user/';
 
@@ -20,11 +19,7 @@ export class AuthService {
   private userId: string;
   private authStatusListener = new Subject<boolean>();
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private encryptionService: EncryptionService
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getToken() {
     return this.token;
@@ -56,17 +51,18 @@ export class AuthService {
   //     );
   // }
   login(authData) {
-    let encAuthData = this.encryptionService.encryptData(authData);
-    let body = {
-      authData: encAuthData,
-    };
+    // let encAuthData = this.encryptionService.encryptData(authData);
+    // let body = {
+    //   authData: encAuthData,
+    // };
+
     this.http
       .post<{
         token: string;
         expiresIn: number;
         userId: string;
         userDetails: any;
-      }>(BACKEND_URL + 'login', body)
+      }>(BACKEND_URL + 'login', authData)
       .subscribe(
         (response) => {
           const token = response.token;
